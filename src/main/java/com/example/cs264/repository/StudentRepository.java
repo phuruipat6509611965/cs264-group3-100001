@@ -3,6 +3,7 @@ package com.example.cs264.repository;
 import com.example.cs264.model.Student;
 import com.example.cs264.model.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -36,10 +37,25 @@ public class StudentRepository implements StudentRepositoryInterface {
 
     }
 
-    public List<Student> getStudentByEmail(String email){
-        String sqlStudent = "SELECT * FROM Student where studentId = ?";
-        List<Student> students = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Student.class), email);
-        return students;
-    }
+    public List<Student> getStudentByEmail(String email) {
+        try {
+            String sqlStudent = "SELECT * FROM Student where email = ?";
+            List<Student> students = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Student.class), email);
+            String sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ?";
 
+            for (Student s : students) {
+                List<Subject> addSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Register");
+                s.setAddSubjectList(addSubjectList.toArray(new Subject[0]));
+            }
+            for (Student s : students) {
+                List<Subject> dropSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Withdraw");
+                s.setDropSubjectList(dropSubjectList.toArray(new Subject[0]));
+            }
+
+            return students;
+
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
 }
