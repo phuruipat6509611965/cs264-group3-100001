@@ -4,7 +4,6 @@ import lombok.*;
 @Getter
 @Setter
 public class Subject {
-    private String studentId;
     private String subjectCode;
     private String subjectName;
     private String subjectSection;
@@ -12,5 +11,9 @@ public class Subject {
     private String subjectCredit;
     private String subjectTeacher;
     private boolean subjectTeacherCheck;
-    private String type;
+    private String registeration_type;
+
+    public boolean getSubjectTeacherCheck() {
+        return subjectTeacherCheck;
+    }
 }

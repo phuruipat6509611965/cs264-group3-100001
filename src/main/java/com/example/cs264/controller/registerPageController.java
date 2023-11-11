@@ -23,6 +23,11 @@ public class registerPageController {
         return loginRepository.loginConfirmation(email, password);
     }
 
+    @PostMapping("/add")
+    public void addStudent(@RequestBody Student student) {
+        studentRepository.createStudent(student);
+    }
+
     @GetMapping("/req")
     public List<Student> reqStudent(@RequestParam(name = "email", required = true) String email){
         return studentRepository.getStudentByEmail(email);

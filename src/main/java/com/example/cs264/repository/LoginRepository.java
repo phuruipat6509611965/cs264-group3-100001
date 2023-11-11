@@ -14,6 +14,7 @@ public class LoginRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
     public boolean loginConfirmation(String emailIn, String passwordIn) {
         String sql = "SELECT * FROM Login WHERE email = ? AND password = ?";
         List<Student> students = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Student.class), new Object[]{emailIn, passwordIn});
