@@ -4,6 +4,7 @@ import lombok.*;
 @Getter
 @Setter
 public class Subject {
+    private String studentID;
     private String subjectCode;
     private String subjectName;
     private String subjectSection;

@@ -9,4 +9,6 @@ public interface StudentRepositoryInterface {
     public void createStudent(Student student);
     public void updateStudent(Student student, String id);
 
+    public List<List<Student>> getStudentByTeacher(String teacher);
+
 }

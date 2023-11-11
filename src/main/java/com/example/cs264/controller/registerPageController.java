@@ -38,4 +38,9 @@ public class registerPageController {
         studentRepository.updateStudent(student, studentId);
     }
 
+    @GetMapping("/tget")
+    public List<List<Student>> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
+        return studentRepository.getStudentByTeacher(teacher);
+    }
+
 }
