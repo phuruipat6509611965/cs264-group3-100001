@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -57,5 +59,14 @@ public class StudentRepository implements StudentRepositoryInterface {
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;
         }
+    }
+
+    @Override
+    public void updateStudent(Student student, String id){
+        LocalDate dt = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        String java_date = formatter.format(dt);
+        String sqlStudent = "UPDATE Student SET date=?, studentFirstName=?, studentLastName=?, studentYear=?, studyField=?, advisor=?, addressNumber=?, moo=?, tumbol=?, amphur=?, province=?, postalCode=?, mobilePhone=?, phone=?, cause=? WHERE studentId=?";
+        jdbcTemplate.update(sqlStudent, java_date, student.getStudentFirstName(), student.getStudentLastName(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause(), id);
     }
 }

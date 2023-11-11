@@ -33,4 +33,9 @@ public class registerPageController {
         return studentRepository.getStudentByEmail(email);
     }
 
+    @PostMapping("/update")
+    public void updateStudent(@RequestBody Student  student, @RequestParam String studentId){
+        studentRepository.updateStudent(student, studentId);
+    }
+
 }

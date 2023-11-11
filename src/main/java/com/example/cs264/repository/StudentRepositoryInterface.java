@@ -7,5 +7,6 @@ import java.util.List;
 public interface StudentRepositoryInterface {
     public List<Student> getStudentByEmail(String email);
     public void createStudent(Student student);
+    public void updateStudent(Student student, String id);
 
 }
