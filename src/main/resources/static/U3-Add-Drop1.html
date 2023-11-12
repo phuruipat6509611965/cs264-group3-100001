@@ -150,14 +150,6 @@
                 </div>
             </div>
             <br>
-            <div class="d-flex justify-content-end">
-                วันที่:
-                &nbsp;
-                <p>
-                <div class="d-flex justify-end" style="width: 200px;">
-                    <input name="date" id="date" class="form-control" type="date" required />
-                </div>
-            </div>
             <div class="container d-flex  flex-column  mt-4">
                 <form id="myForm">
                     <br>
@@ -182,7 +174,7 @@
                                 <option value="3">นางสาว</option>
                             </select>
                             <input required id="studentFirstname" required type="text"
-                                class="form-control form-control-sm" aria-label="Small" placeholder="กรุณากรอกข้อความที่นี่"
+                                class="form-control form-control-sm" aria-label="Small"
                                 aria-describedby="inputGroup-sizing-sm" style="width:300px;">
                             <input required id="studentLastname" required type="text"
                                 class="form-control form-control-sm" aria-label="Small"
@@ -310,6 +302,16 @@
                                 aria-describedby="inputGroup-sizing-sm" style="width: 400px;">
                         </div>
                     </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm"><b>เหตุผลที่ขอเพิ่ม-ถอน</b></span>
+                        </div>
+
+                        <div>
+                            <input required id="cause" class="form-control" aria-label="Small"
+                                aria-describedby="inputGroup-sizing-sm" style="width: 400px;">
+                        </div>
+                    </div>
                     <br>
                     <div class="d-flex justify-content-end">
                         <a href="U5-Add-Drop2.html"> <button type="button" class="btn btn-danger">Next</button></a>
@@ -319,7 +321,6 @@
     </div>
 
     <script>
-
 
         var gstudentFirstname = sessionStorage.getItem('studentFirstname');
         var gstudentLastname = sessionStorage.getItem('studentLastname');
@@ -336,6 +337,7 @@
         var gstudyField = sessionStorage.getItem('studyField');
         var gmobilePhone = sessionStorage.getItem('mobilePhone');
         var gtitleName = sessionStorage.getItem('titleName');
+        var gcause = sessionStorage.getItem('cause');
 
         document.getElementById("studentFirstname").value = gstudentFirstname;
         document.getElementById("studentLastname").value = gstudentLastname;
@@ -352,6 +354,7 @@
         document.getElementById("mobilePhone").value = gmobilePhone;
         document.getElementById("phone").value = gphone;
         document.getElementById("titleName").value = gtitleName;
+        document.getElementById("cause").value = gcause;
 
         console.log(gstudentFirstname, gstudentLastname, gstudentId, gstudentYear, gadvisor, gaddressNumber, gmoo, gtumbol, gamphur, gprovince, gpostalcode);
 

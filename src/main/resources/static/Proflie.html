@@ -281,7 +281,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-sm"><b>รหัสไปรษณีย์</b></span>
                             </div>
-                            <input required pattern=".{5}" type="number" id="postalcode"
+                            <input required pattern=".{5}" type="text" id="postalcode"
                                 class="form-control form-control-sm" aria-label="Small"
                                 aria-describedby="inputGroup-sizing-sm">
                         </div>
@@ -289,7 +289,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-sm"><b>โทรศัพท์มือถือ</b></span>
                             </div>
-                            <input required pattern=".{10}" type="number" id="mobilePhone"
+                            <input required pattern=".{10}" type="text" id="mobilePhone"
                                 class="form-control form-control-sm" aria-label="Small"
                                 aria-describedby="inputGroup-sizing-sm">
                         </div>
@@ -298,7 +298,7 @@
                                 <span class="input-group-text"
                                     id="inputGroup-sizing-sm"><b>โทรศัพท์บ้าน(ถ้ามี)</b></span>
                             </div>
-                            <input pattern=".{10}" type="number" id="phone" class="form-control form-control-sm"
+                            <input pattern=".{10}" type="text" id="phone" class="form-control form-control-sm"
                                 aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                         </div>
                     </div>
@@ -310,6 +310,16 @@
 
                         <div>
                             <input required id="advisor" class="form-control" aria-label="Small"
+                                aria-describedby="inputGroup-sizing-sm" style="width: 400px;">
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm"><b>เหตุผลที่ขอเพิ่ม-ถอน</b></span>
+                        </div>
+
+                        <div>
+                            <input required id="cause" class="form-control" aria-label="Small"
                                 aria-describedby="inputGroup-sizing-sm" style="width: 400px;">
                         </div>
                     </div>
@@ -342,6 +352,7 @@
          var phone= document.getElementById('phone').value
          var studyField= document.getElementById('studyField').value
          var titleName = document.getElementById('titleName').value
+         var cause = document.getElementById('cause').value
 
          sessionStorage.setItem('studentFirstname', studentFirstname);
          sessionStorage.setItem('studentLastname', studentLastname);
@@ -358,6 +369,7 @@
          sessionStorage.setItem('studyField', studyField);
          sessionStorage.setItem('mobilePhone', mobilePhone);
          sessionStorage.setItem('titleName', titleName);
+         sessionStorage.setItem('cause', cause);
          window.location.href = "U3-Add-Drop1.html";
 
          console.log(studentFirstname, studentLastname, studentId, studentYear, advisor, addressNumber, moo, tumbol, amphur, province, birthday, postalcode, titleName);
