@@ -189,9 +189,11 @@
                         if (username.includes('@dome')) {
                             // window.location.href = "Profile.html";
                             alert("go to <Profile page>");
-                        } else {
+                        } else if (username.includes('@staff')) {
                             // window.location.href = "<teacher approve page>"; 
                             alert("go to <teacher approve page>");
+                        }else {
+                            alert("Please use Thamasat university email");
                         }
                     } else {
                         alert("Login failed");
