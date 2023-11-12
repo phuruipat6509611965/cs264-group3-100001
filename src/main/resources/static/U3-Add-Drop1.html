@@ -101,9 +101,11 @@
 <body>
     <div class="color-bar1"></div>
     <div class="color-bar2"></div>
+    <br>
     <div class="d-flex justify-content-center">
-        <img src="Capture1.PNG" class="img-fluid" class="imge-Responsive">
+        <img src="ธรรมศาสตร์.png" class="img-fluid" class="imge-Responsive">
     </div>
+    <br>
     <div class="color-bar3">
         <div class="left-bar3"></div>
         <div class="right-bar3"></div>
@@ -173,14 +175,14 @@
                                 &nbsp;
                             </div>
 
-                            <select class="form-select" aria-label="Default select example" style="width: 100px;">
+                            <select class="form-select" aria-label="Default select example" style="width: 100px;" id="titleName">
                                 <option required selected>คำนำหน้า</option>
                                 <option value="1">นาย</option>
                                 <option value="2">นาง</option>
                                 <option value="3">นางสาว</option>
                             </select>
                             <input required id="studentFirstname" required type="text"
-                                class="form-control form-control-sm" aria-label="Small"
+                                class="form-control form-control-sm" aria-label="Small" placeholder="กรุณากรอกข้อความที่นี่"
                                 aria-describedby="inputGroup-sizing-sm" style="width:300px;">
                             <input required id="studentLastname" required type="text"
                                 class="form-control form-control-sm" aria-label="Small"
@@ -194,7 +196,7 @@
                         </div>
                         <div>
                             <input required pattern=".{10}" id="studentId" type="text" class="form-control"
-                                aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 300px;">
+                                aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 300px;" value=gstudentId>
 
                         </div>
 
@@ -238,7 +240,7 @@
                                 <span class="input-group-text" id="inputGroup-sizing-sm"><b>บ้านเลขที่</b></span>
                             </div>
                             <input required id="addressNumber" class="form-control form-control-sm" aria-label="Small"
-                                aria-describedby="inputGroup-sizing-sm">
+                                aria-describedby="inputGroup-sizing-sm" >
                         </div>
 
                         <div class="input-group input-group-sm mb-3">
@@ -316,27 +318,44 @@
         </div>
     </div>
 
-    <script>document.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById("myForm");
-      
-        form.addEventListener("submit", function(event) {
-          event.preventDefault(); // Prevent the form from actually submitting
-         var date=console.log(document.getElementById('date').value)
-         var studentFirstname=console.log(document.getElementById('studentFirstname').value)
-         var studentLastname= console.log(document.getElementById('studentLastname').value)
-         var studentId= console.log(document.getElementById('studentId').value)
-         var studentYear= console.log(document.getElementById('studentYear').value)
-         var advisor= console.log(document.getElementById('advisor').value)
-         var addressNumber= console.log(document.getElementById('addressNumber').value)
-         var moo=console.log(document.getElementById('moo').value)
-         var tumbol= console.log(document.getElementById('tumbol').value)
-         var amphur= console.log(document.getElementById('amphur').value)
-         var province= console.log(document.getElementById('province').value)
-         var postalcode= console.log(document.getElementById('postalcode').value)
-         var mobilePhone= console.log(document.getElementById('mobilePhone').value)
-         var phone= console.log(document.getElementById('phone').value)
-        });
-      });</script>
+    <script>
+
+
+        var gstudentFirstname = sessionStorage.getItem('studentFirstname');
+        var gstudentLastname = sessionStorage.getItem('studentLastname');
+        var gstudentId = sessionStorage.getItem('studentId');
+        var gstudentYear = sessionStorage.getItem('studentYear');
+        var gadvisor = sessionStorage.getItem('advisor');
+        var gaddressNumber = sessionStorage.getItem('addressNumber');
+        var gmoo = sessionStorage.getItem('moo');
+        var gtumbol = sessionStorage.getItem('tumbol');
+        var gamphur = sessionStorage.getItem('amphur');
+        var gprovince = sessionStorage.getItem('province');
+        var gpostalcode = sessionStorage.getItem('postalcode');
+        var gphone = sessionStorage.getItem('phone');
+        var gstudyField = sessionStorage.getItem('studyField');
+        var gmobilePhone = sessionStorage.getItem('mobilePhone');
+        var gtitleName = sessionStorage.getItem('titleName');
+
+        document.getElementById("studentFirstname").value = gstudentFirstname;
+        document.getElementById("studentLastname").value = gstudentLastname;
+        document.getElementById("studentId").value = gstudentId;
+        document.getElementById("studentYear").value = gstudentYear;
+        document.getElementById("advisor").value = gadvisor;
+        document.getElementById("addressNumber").value = gaddressNumber;
+        document.getElementById("moo").value = gmoo;
+        document.getElementById("tumbol").value = gtumbol;
+        document.getElementById("amphur").value = gamphur;
+        document.getElementById("province").value = gprovince;
+        document.getElementById("postalcode").value = gpostalcode;
+        document.getElementById("studyField").value = gstudyField;
+        document.getElementById("mobilePhone").value = gmobilePhone;
+        document.getElementById("phone").value = gphone;
+        document.getElementById("titleName").value = gtitleName;
+
+        console.log(gstudentFirstname, gstudentLastname, gstudentId, gstudentYear, gadvisor, gaddressNumber, gmoo, gtumbol, gamphur, gprovince, gpostalcode);
+
+    </script>
 </body>
  
 </html>
