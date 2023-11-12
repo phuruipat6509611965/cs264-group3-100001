@@ -150,62 +150,60 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
-            const url = "http://localhost:8080/api/student"; // Add Url
-
+            const url = "http://localhost:8080/api/student/login";
+    
             form.addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent the form from actually submitting
-                var username = document.getElementById("username").value
-                var password = document.getElementById("password").value
-
-                let formData = {
-                    'username': username,
+                event.preventDefault();
+    
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+    
+                const formData = {
+                    'email': username,
                     'password': password
-                }
-
-                const jsonData = JSON.stringify(formData);
-
-
-                let isLogin;
-
+                };
+    
+                const jsonData = JSON.stringify(formData, null, 2);
+                console.log(jsonData);
+    
                 fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: jsonData,
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: jsonData,
                 })
                 .then((response) => {
-                    if (response.ok) {
-                    // Request was successful
-                    alert("Login successful");
-                    return response.json();
-                    } else {
-                    // Handle errors
-                    alert("Login error");
-                    throw new Error("Login failed");
+                    if (!response.ok) {
+                        throw new Error("Login failed");
                     }
+                    return response;
                 })
+
                 .then((data) => {
-                    // Get data from response
-                    isLogin = data;
+                    // Assuming the server responds
+                    const isLogin = data;
+                    console.log(isLogin)
+    
                     if (isLogin) {
-                    if (/^@dome/.test(username)) {
-                        window.location.href = "Profile.html";
+                        if (username.includes('@dome')) {
+                            // window.location.href = "Profile.html";
+                            alert("go to <Profile page>");
+                        } else {
+                            // window.location.href = "<teacher approve page>"; 
+                            alert("go to <teacher approve page>");
+                        }
                     } else {
-                        window.location.href = "U8-Approved-Teacher.html";
-                    }
-                    } else {
-                    alert("Login failed");
+                        alert("Login failed");
                     }
                 })
                 .catch((error) => {
-                    // Handle error
-                    alert(error);
+                    alert("Login failed: " + error.message);
                 });
             });
-
         });
     </script>
+    
 </body>
 
 </html>

@@ -21,7 +21,7 @@ public class registerPageController {
 
     @PostMapping("/login")
     public boolean loginConfirm(@RequestBody Login login){
-        return loginRepository.loginConfirmation(login.getStudentId(), login.getPassword());
+        return loginRepository.loginConfirmation(login.getEmail(), login.getPassword());
     }
 
     @PostMapping("/add")

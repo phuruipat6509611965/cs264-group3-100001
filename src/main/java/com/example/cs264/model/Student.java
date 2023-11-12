@@ -7,6 +7,7 @@ import java.util.List;
 @Setter
 public class Student {
     private String date;
+    private String title;
     private String studentFirstName;
     private String studentLastName;
     private String studentId;

@@ -23,8 +23,8 @@ public class StudentRepository implements StudentRepositoryInterface {
     public void createStudent(Student student) {
 
         //Save student data into table
-        String student_data = "Insert INTO Student (date, studentFirstName, studentLastName, studentId, email, studentYear,  studyField, advisor, addressNumber, moo, tumbol, amphur, province, postalCode, mobilePhone, phone ,cause)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(student_data, student.getDate(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId(), student.getEmail(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause());
+        String student_data = "Insert INTO Student (date, title, studentFirstName, studentLastName, studentId, email, studentYear,  studyField, advisor, addressNumber, moo, tumbol, amphur, province, postalCode, mobilePhone, phone ,cause)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(student_data, student.getDate(), student.getTitle(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId(), student.getEmail(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause());
 
         //Save subject
         String subject_data = "Insert INTO Subject (studentId, subjectCode, subjectName, subjectSection, subjectDate, subjectCredit, subjectTeacher, subjectTeacherCheck, registeration_type)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -67,8 +67,8 @@ public class StudentRepository implements StudentRepositoryInterface {
         LocalDate dt = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         String java_date = formatter.format(dt);
-        String sqlStudent = "UPDATE Student SET date=?, studentFirstName=?, studentLastName=?, studentYear=?, studyField=?, advisor=?, addressNumber=?, moo=?, tumbol=?, amphur=?, province=?, postalCode=?, mobilePhone=?, phone=?, cause=? WHERE studentId=?";
-        jdbcTemplate.update(sqlStudent, java_date, student.getStudentFirstName(), student.getStudentLastName(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause(), id);
+        String sqlStudent = "UPDATE Student SET date=?, title=?, studentFirstName=?, studentLastName=?, studentYear=?, studyField=?, advisor=?, addressNumber=?, moo=?, tumbol=?, amphur=?, province=?, postalCode=?, mobilePhone=?, phone=?, cause=? WHERE studentId=?";
+        jdbcTemplate.update(sqlStudent, java_date, student.getTitle(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause(), id);
     }
 
     public List<List<Student>> getStudentByTeacher(String teacher){

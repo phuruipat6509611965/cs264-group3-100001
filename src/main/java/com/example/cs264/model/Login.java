@@ -4,6 +4,6 @@ import lombok.*;
 @Getter
 @Setter
 public class Login {
-    private String studentId;
+    private String email;
     private String password;
 }
