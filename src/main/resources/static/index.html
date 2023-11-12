@@ -150,7 +150,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
-            const url = "http://localhost:8080"; // Add Url
+            const url = "http://localhost:8080/api/student"; // Add Url
 
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent the form from actually submitting
@@ -162,12 +162,12 @@
                     'password': password
                 }
 
-                const jsonData = JSON.stringify(formData, null, 2);
+                const jsonData = JSON.stringify(formData);
 
 
                 let isLogin;
 
-                fetch(url + "/login", {
+                fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

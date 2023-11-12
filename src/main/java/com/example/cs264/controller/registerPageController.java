@@ -1,5 +1,6 @@
 package com.example.cs264.controller;
 
+import com.example.cs264.model.Login;
 import com.example.cs264.model.Student;
 import com.example.cs264.repository.LoginRepository;
 import com.example.cs264.repository.StudentRepository;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/student")
 @CrossOrigin
-@RequestMapping("/api/students")
 public class registerPageController {
 
     @Autowired
@@ -19,8 +20,8 @@ public class registerPageController {
     StudentRepository studentRepository;
 
     @PostMapping("/login")
-    public boolean loginConfirm(@RequestParam(name = "email", required = true) String email,@RequestParam(name = "password", required = true) String password){
-        return loginRepository.loginConfirmation(email, password);
+    public boolean loginConfirm(@RequestBody Login login){
+        return loginRepository.loginConfirmation(login.getStudentId(), login.getPassword());
     }
 
     @PostMapping("/add")
