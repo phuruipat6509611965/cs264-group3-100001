@@ -150,7 +150,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
-            const url = "";
+            const url = "http://localhost:8080"; // Add Url
 
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent the form from actually submitting
@@ -167,7 +167,7 @@
 
                 let isLogin;
 
-                fetch(url, {
+                fetch(url + "/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
