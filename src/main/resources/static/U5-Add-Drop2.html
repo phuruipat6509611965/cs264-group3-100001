@@ -241,6 +241,9 @@
     </div>
     
     <script>
+
+        document.getElementById("cause").value = sessionStorage.getItem('cause');
+
         function generateSubjectForm(tableBodyId) {
             const numberOfSubjects = document.getElementById(`numberOfSubjectsToAdd`).value;
             const tableBody = document.getElementById(tableBodyId);
@@ -260,6 +263,8 @@
 
                 tableBody.appendChild(subjectRow);
             }
+
+            console.log(numberOfSubjects);
         }
 
         function generateDeleteSubjectForm() {
@@ -281,9 +286,11 @@
 
                 tableBody.appendChild(subjectRow);
             }
+
+            console.log(numberOfSubjects);
         }
 
-        function collectData(numberOfSubjectsToAdd, numberOfSubjectsToDelete){
+        function collectData(){
 
             var gstudentFirstname = sessionStorage.getItem('studentFirstname');
             var gstudentLastname = sessionStorage.getItem('studentLastname');
@@ -302,13 +309,13 @@
             var gmobilePhone = sessionStorage.getItem('mobilePhone');
             var gtitleName = sessionStorage.getItem('titleName');
             var gcause = sessionStorage.getItem('cause');
-            const date = new date();
+            const date = new Date();
 
-            console.log(gstudentFirstname, gstudentLastname, gstudentId, gstudentYear, gemail, gadvisor, gaddressNumber, gmoo, gtumbol, gamphur, gprovince, gpostalcode, gphone, gstudyField, gmobilePhone, gtitleName, gcause);
+            console.log(gstudentFirstname, gstudentLastname,gphone,gtitleName,gcause,date);
 
             const formData = {
                 date: date,
-                titleName: gtitleName,
+                title: gtitleName,
                 studentFirstName: gstudentFirstname,
                 studentLastName: gstudentLastname,
                 studentId: gstudentId,
@@ -329,7 +336,11 @@
                 dropSubjectList: []
             };
 
-            for(let i=0;i<numberOfSubjectsToAdd;i++){
+            const numberOfSubjects1 = document.getElementById(`numberOfSubjectsToAdd`).value;
+
+            console.log(numberOfSubjects1);
+
+            for(let i=1;i<=numberOfSubjects1;i++){
             const subjectCode = document.getElementById(`subjectCodeToAdd${i}`).value;
             const subjectName = document.getElementById(`subjectNameToAdd${i}`).value;
             const section = document.getElementById(`sectionToAdd${i}`).value;
@@ -337,19 +348,26 @@
             const git = document.getElementById(`gitToAdd${i}`).value;
 
             console.log(subjectCode, subjectName, section, date, git);
-            
+          
             const subject = {
-            subjectCodeToAdd : subjectCode,
-            subjectNameToAdd : subjectName,
-            sectionToAdd : section,
+            subjectCode : subjectCode,
+            subjectName : subjectName,
+            subjectSection : section,
             dateToAdd : date,
             gitToAdd : git,
             };
-
-            formData.addSubjectList.push(subject);
-        }
             
-            for(let i=0;i<numberOfSubjectsToDelete;i++){
+            formData.addSubjectList.push(subject);
+
+            console.log(subject);
+
+        }
+
+        const numberOfSubjects2 = document.getElementById('numberOfSubjectsToDelete').value;
+
+        console.log(numberOfSubjects2);
+      
+            for(let i=1;i<=numberOfSubjects2;i++){
             const subjectCode = document.getElementById(`subjectCodeToDelete${i}`).value;
             const subjectName = document.getElementById(`subjectNameToDelete${i}`).value;
             const section = document.getElementById(`sectionToDelete${i}`).value;
@@ -359,21 +377,27 @@
             console.log(subjectCode, subjectName, section, date, git);
             
             const subject = {
-            subjectCodeToAdd : subjectCode,
-            subjectNameToAdd : subjectName,
-            sectionToAdd : section,
+            subjectCode : subjectCode,
+            subjectName : subjectName,
+            subjectSection : section,
             dateToAdd : date,
             gitToAdd : git,
             };
 
             formData.dropSubjectList.push(subject);
+
         }
 
         const jsonData = JSON.stringify(formData);
 
+        console.log(jsonData);
+
+        sendData(jsonData);
+
         }
 
         function sendData(jsonData){
+
         fetch('http://localhost:8080/api/students/add', {
             method: 'POST',
             headers: {
@@ -384,7 +408,12 @@
         .then(response => response.json())
         .then(data => {alert("Success");})
         .catch(error => {alert("Error");});
+
         }
+
+        document.getElementById('submit').addEventListener('click', function(event) {
+            collectData();
+        });
 
 
     </script>
