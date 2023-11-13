@@ -189,6 +189,7 @@
                                     <th>Section</th>
                                     <th>วัน</th>
                                     <th>หน่วยกิต</th>
+                                    <th>อาจารย์ผู้สอน</th>
                                 </tr>
                             </thead>
                             <tbody id="addSubjectTableBody">
@@ -213,6 +214,7 @@
                                     <th>Section</th>
                                     <th>วัน</th>
                                     <th>หน่วยกิต</th>
+                                    <th>อาจารย์ผู้สอน</th>
                                 </tr>
                             </thead>
                             <tbody id="deleteSubjectTableBody">
@@ -245,7 +247,10 @@
         document.getElementById("cause").value = sessionStorage.getItem('cause');
 
         function generateSubjectForm(tableBodyId) {
-            const numberOfSubjects = document.getElementById(`numberOfSubjectsToAdd`).value;
+            var numberOfSubjects = document.getElementById(`numberOfSubjectsToAdd`).value;
+            if(numberOfSubjects >= 10){
+                numberOfSubjects = 10;
+            }
             const tableBody = document.getElementById(tableBodyId);
 
             tableBody.innerHTML = '';
@@ -259,6 +264,7 @@
                 <td><input type="text" name="sectionToAdd${i}" id="sectionToAdd${i}" required></td>
                 <td><input type="text" name="dateToAdd${i}" id="dateToAdd${i}" required></td>
                 <td><input type="text" name="gitToAdd${i}" id="gitToAdd${i}" required></td>
+                <td><input type="text" name="subjectTeacherToAdd${i}" id="subjectTeacherToAdd${i}" required></td>
             `;
 
                 tableBody.appendChild(subjectRow);
@@ -268,7 +274,10 @@
         }
 
         function generateDeleteSubjectForm() {
-            const numberOfSubjects = document.getElementById('numberOfSubjectsToDelete').value;
+            var numberOfSubjects = document.getElementById('numberOfSubjectsToDelete').value;
+            if(numberOfSubjects >= 10){
+                numberOfSubjects = 10;
+            }
             const tableBody = document.getElementById('deleteSubjectTableBody');
 
             tableBody.innerHTML = '';
@@ -282,6 +291,7 @@
               <td><input type="text" name="sectionToDelete${i}" id="sectionToDelete${i}"  required></td>
               <td><input type="text" name="dateToDelete${i}" id="dateToDelete${i}"  required></td>
               <td><input type="text" name="gitToDelete${i}" id="gitToDelete${i}"  required></td>
+              <td><input type="text" name="subjectTeacherToDelete${i}" id="subjectTeacherToDelete${i}" required></td>
           `;
 
                 tableBody.appendChild(subjectRow);
@@ -310,6 +320,8 @@
             var gtitleName = sessionStorage.getItem('titleName');
             var gcause = sessionStorage.getItem('cause');
             const date = new Date();
+
+            document.getElementById('cause').value = sessionStorage.getItem('cause');
 
             console.log(gstudentFirstname, gstudentLastname,gphone,gtitleName,gcause,date);
 
@@ -346,15 +358,18 @@
             const section = document.getElementById(`sectionToAdd${i}`).value;
             const date = document.getElementById(`dateToAdd${i}`).value;
             const git = document.getElementById(`gitToAdd${i}`).value;
-
-            console.log(subjectCode, subjectName, section, date, git);
+            const check = document.getElementById(`subjectTeacherToAdd${i}`).value;
           
             const subject = {
+            studentID : gstudentId,
             subjectCode : subjectCode,
             subjectName : subjectName,
             subjectSection : section,
-            dateToAdd : date,
-            gitToAdd : git,
+            subjectDate : date,
+            subjectCredit : git,
+            subjectTeacher : check,
+            subjectTeacherCheck : false,
+            registeration_type : "Register"
             };
             
             formData.addSubjectList.push(subject);
@@ -373,15 +388,20 @@
             const section = document.getElementById(`sectionToDelete${i}`).value;
             const date = document.getElementById(`dateToDelete${i}`).value;
             const git = document.getElementById(`gitToDelete${i}`).value;
+            const check = document.getElementById(`subjectTeacherToDelete${i}`).value;
 
             console.log(subjectCode, subjectName, section, date, git);
             
             const subject = {
+            studentID : gstudentId,
             subjectCode : subjectCode,
             subjectName : subjectName,
             subjectSection : section,
-            dateToAdd : date,
-            gitToAdd : git,
+            subjectDate : date,
+            subjectCredit : git,
+            subjectTeacher : check,
+            subjectTeacherCheck : false,
+            registeration_type : "Withdraw"
             };
 
             formData.dropSubjectList.push(subject);
