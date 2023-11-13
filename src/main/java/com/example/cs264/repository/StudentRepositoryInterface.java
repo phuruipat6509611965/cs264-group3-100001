@@ -11,4 +11,6 @@ public interface StudentRepositoryInterface {
 
     public List<List<Student>> getStudentByTeacher(String teacher);
 
+    public void deleteById(String id);
+
 }

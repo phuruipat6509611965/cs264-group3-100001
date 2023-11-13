@@ -102,4 +102,12 @@ public class StudentRepository implements StudentRepositoryInterface {
             return null;
         }
     }
+
+    @Override
+    public void deleteById(String id) {
+        String sqlSubject = "DELETE FROM Subject WHERE studentId=?";
+        String sqlStudent = "DELETE FROM Student WHERE studentId=?";
+        jdbcTemplate.update(sqlSubject,id);
+        jdbcTemplate.update(sqlStudent,id);
+    }
 }
