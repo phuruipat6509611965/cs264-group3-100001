@@ -1,7 +1,6 @@
 package com.example.cs264.model;
 import lombok.*;
 
-import java.util.List;
 
 @Getter
 @Setter
