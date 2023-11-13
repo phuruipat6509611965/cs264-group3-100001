@@ -50,7 +50,7 @@ public class registerPageController {
 
     @GetMapping("/tget")
     public List<List<Student>> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
-        return studentRepository.getStudentByTeacher(teacher);
+        return teacherRepository.getStudentByTeacher(teacher);
     }
 
     @GetMapping("/tname")
