@@ -1,5 +1,6 @@
 package com.example.cs264.controller;
 
+import com.example.cs264.model.CheckLogin;
 import com.example.cs264.model.Login;
 import com.example.cs264.model.Student;
 import com.example.cs264.repository.LoginRepository;
@@ -24,8 +25,10 @@ public class registerPageController {
     TeacherRepository teacherRepository;
 
     @PostMapping("/login")
-    public boolean loginConfirm(@RequestBody Login login){
-        return loginRepository.loginConfirmation(login.getEmail(), login.getPassword());
+    public CheckLogin loginConfirm(@RequestBody Login login){
+        CheckLogin check = new CheckLogin();
+        check.setLogin(loginRepository.loginConfirmation(login.getEmail(), login.getPassword()));
+        return check;
     }
 
     @PostMapping("/add")

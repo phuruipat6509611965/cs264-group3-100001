@@ -166,21 +166,16 @@
                         if (!response.ok) {
                             throw new Error("Login failed");
                         }
-                        return response;
+                        return response.json();
                     })
 
                     .then((data) => {
                         // Assuming the server responds
-                        const isLogin = data;
-                        console.log(isLogin)
-
-                        if (isLogin) {
+                        if (data.login) {
                             if (username.includes('@dome')) {
-                                // window.location.href = "Profile.html";
-                                alert("Run window.location.href = \"Profile.html\";") // Delete when done
+                                window.location.href = "Profile.html"
                             } else if (username.includes('@staff')) {
-                                // window.location.href = "U8-Approved-Teacher.html";
-                                alert("Run window.location.href = \"U8-Approved-Teacher.html\";") // Delete when done
+                                window.location.href = "U8-Approved-Teacher.html"
                             } else {
                                 invalidLabel.style.display = 'flex';
                             }
