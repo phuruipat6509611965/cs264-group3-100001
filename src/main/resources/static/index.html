@@ -145,7 +145,7 @@
                 var username = document.getElementById("username").value;
                 var password = document.getElementById("password").value;
 
-                sessionStorage.setItem('password', password);
+                sessionStorage.setItem('username', username);
 
                 const formData = {
                     'email': username,
@@ -177,9 +177,11 @@
                             } else if (username.includes('@staff')) {
                                 window.location.href = "U8-Approved-Teacher.html"
                             } else {
+                                invalidLabel.style.display = 'none';
                                 invalidLabel.style.display = 'flex';
                             }
                         } else {
+                            invalidLabel.style.display = 'none';
                             invalidLabel.style.display = 'flex';
                         }
                     })
