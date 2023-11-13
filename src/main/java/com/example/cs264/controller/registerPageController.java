@@ -4,6 +4,7 @@ import com.example.cs264.model.Login;
 import com.example.cs264.model.Student;
 import com.example.cs264.repository.LoginRepository;
 import com.example.cs264.repository.StudentRepository;
+import com.example.cs264.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,9 @@ public class registerPageController {
     LoginRepository loginRepository;
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 
     @PostMapping("/login")
     public boolean loginConfirm(@RequestBody Login login){
@@ -39,9 +43,19 @@ public class registerPageController {
         studentRepository.updateStudent(student, studentId);
     }
 
+    @GetMapping("/del")
+    public void deleteById(@RequestParam String studentId){
+        studentRepository.deleteById(studentId);
+    }
+
     @GetMapping("/tget")
     public List<List<Student>> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
-        return studentRepository.getStudentByTeacher(teacher);
+        return teacherRepository.getStudentByTeacher(teacher);
+    }
+
+    @GetMapping("/tname")
+    public String getTeacherName(@RequestParam(name = "email", required = true) String email){
+        return teacherRepository.getTeacherByEmail(email);
     }
 
 }

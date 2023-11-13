@@ -71,35 +71,11 @@ public class StudentRepository implements StudentRepositoryInterface {
         jdbcTemplate.update(sqlStudent, java_date, student.getTitle(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause(), id);
     }
 
-    public List<List<Student>> getStudentByTeacher(String teacher){
-        try {
-            List<List<Student>> students = new ArrayList<>();
-            String sqlStudent = "SELECT * FROM Subject where subjectTeacher = ?";
-            List<Subject> subjects = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Subject.class), teacher);
-            String sqlSubject = "SELECT * FROM Student where studentID=?";
-
-            for (Subject s : subjects) {
-                List<Student> student = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Student.class), s.getStudentID());
-                students.add(student);
-            }
-            for (List<Student> a: students){
-                sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ?";
-
-                for (Student s : a) {
-                    List<Subject> addSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Register");
-                    s.setAddSubjectList(addSubjectList.toArray(new Subject[0]));
-                }
-                for(Student s : a) {
-                    List<Subject> dropSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Withdraw");
-                    s.setDropSubjectList(dropSubjectList.toArray(new Subject[0]));
-                }
-
-            }
-
-            return students;
-
-        } catch (IncorrectResultSizeDataAccessException e) {
-            return null;
-        }
+    @Override
+    public void deleteById(String id) {
+        String sqlSubject = "DELETE FROM Subject WHERE studentId=?";
+        String sqlStudent = "DELETE FROM Student WHERE studentId=?";
+        jdbcTemplate.update(sqlSubject,id);
+        jdbcTemplate.update(sqlStudent,id);
     }
 }
