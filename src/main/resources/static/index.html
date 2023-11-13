@@ -122,18 +122,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="justify-content-center d-none" id="invalid-text">
+                    <p style="color: #c0062f;">Please use Thamasat university email</p>
+                </div>
                 <div class="d-flex justify-content-center mb-3 ">
                     <div class="d-flex justify-content-end">
-                        <a href="Proflie.html"> <button style="height: 50px; width: 400px; border-radius:250px ;"
-                                type="submit" class="btn btn-danger">LOGIN</button></a>
+                        <button style="height: 50px; width: 400px; border-radius:250px ;" type="submit"
+                            class="btn btn-danger">LOGIN</button>
                     </div>
                 </div>
         </div>
         </form>
     </div>
-    <script>document.addEventListener("DOMContentLoaded", function () {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
             const url = "http://localhost:8080/api/student/login";
+            const invalidLabel = document.getElementById("invalid-text")
 
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent the form from actually submitting
@@ -141,15 +146,15 @@
                 var password = document.getElementById("password").value;
 
                 sessionStorage.setItem('password', password);
-    
+
                 const formData = {
                     'email': username,
                     'password': password
                 };
-    
+
                 const jsonData = JSON.stringify(formData, null, 2);
                 console.log(jsonData);
-    
+
                 fetch(url, {
                     method: "POST",
                     headers: {
@@ -157,35 +162,33 @@
                     },
                     body: jsonData,
                 })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Login failed");
-                    }
-                    return response;
-                })
-
-                .then((data) => {
-                    // Assuming the server responds
-                    const isLogin = data;
-                    console.log(isLogin)
-    
-                    if (isLogin) {
-                        if (username.includes('@dome')) {
-                            // window.location.href = "Profile.html";
-                            alert("go to <Profile page>");
-                        } else if (username.includes('@staff')) {
-                            // window.location.href = "<teacher approve page>"; 
-                            alert("go to <teacher approve page>");
-                        }else {
-                            alert("Please use Thamasat university email");
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Login failed");
                         }
-                    } else {
-                        alert("Login failed");
-                    }
-                })
-                .catch((error) => {
-                    alert("Login failed: " + error.message);
-                });
+                        return response;
+                    })
+
+                    .then((data) => {
+                        // Assuming the server responds
+                        const isLogin = data;
+                        console.log(isLogin)
+
+                        if (isLogin) {
+                            if (username.includes('@dome')) {
+                                window.location.href = "Profile.html";
+                            } else if (username.includes('@staff')) {
+                                window.location.href = "U8-Approved-Teacher.html";
+                            } else {
+                                invalidLabel.style.display = 'flex';
+                            }
+                        } else {
+                            alert("Login failed");
+                        }
+                    })
+                    .catch((error) => {
+                        alert("Login failed: " + error.message);
+                    });
             });
         });
     </script>
