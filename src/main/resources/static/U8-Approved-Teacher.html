@@ -262,11 +262,7 @@
             <div class="container d-flex  flex-column  mt-4">
                 <div class=tableSubject>
                     <br>&nbsp;&nbsp;&nbsp;
-                    <label for="numberOfSubjectsToAdd">จำนวนวิชาที่ต้องการเพิ่ม (0-10):</label>
-                    <input class="btn btn-outline-secondary btn-sm" type="number" id="numberOfSubjectsToAdd"
-                        name="numberOfSubjectsToAdd" min="0" max="10" required>
-                    <button class="btn btn-outline-dark btn-sm" type="button"
-                        onclick="generateSubjectForm('addSubjectTableBody')">สร้างตาราง</button>
+                    <label for="numberOfSubjectsToAdd">จำนวนวิชาที่ต้องการเพิ่ม :</label>
                     <div class="d-flex justify-content-center">
                         <form id="addSubjectForm">
                             <table id="addSubjectTable">
@@ -281,17 +277,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="addSubjectTableBody">
+                                     <!-- add table by js -->
                                 </tbody>
                             </table>
                         </form>
                     </div>
                     <form id="deleteSubjectForm">
                         <br>&nbsp;&nbsp;&nbsp;
-                        <label for="numberOfSubjectsToDelete">จำนวนวิชาที่ต้องการถอน (0-10):</label>
-                        <input class="btn btn-outline-secondary btn-sm" type="number" id="numberOfSubjectsToDelete"
-                            name="numberOfSubjectsToDelete" min="0" max="10" required>
-                        <button class="btn btn-outline-dark btn-sm" type="button"
-                            onclick="generateDeleteSubjectForm()">สร้างตาราง</button>
+                        <label for="numberOfSubjectsToDelete">จำนวนวิชาที่ต้องการถอน :</label>
                         <div class="d-flex justify-content-center">
                             <table id="deleteSubjectTable">
                                 <thead>
@@ -305,6 +298,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="deleteSubjectTableBody">
+                                    <!-- add table by js -->
                                 </tbody>
                             </table>
                     </form>
@@ -332,8 +326,8 @@
             </div>
             <br>
             <div class="progress">
-                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%; height: 20%;"  aria-valuenow="100"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%; height: 20%;"
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <br>
 
@@ -344,9 +338,9 @@
     </div>
 
     <script>
-        function generateSubjectForm(tableBodyId) {
+        function generateSubjectForm() {
             const numberOfSubjects = document.getElementById(`numberOfSubjectsToAdd`).value;
-            const tableBody = document.getElementById(tableBodyId);
+            const tableBody = document.getElementById('addSubjectTableBody');
 
             tableBody.innerHTML = '';
 
@@ -385,6 +379,68 @@
                 tableBody.appendChild(subjectRow);
             }
         }
+
+
+        function getStudentList() {
+            let teacherName;
+            let studentAllData = [];
+            fetch(`http://localhost:8080/api/students/tname?email=${sessionStorage.getItem('username')}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Login failed");
+                    }
+                    return response;
+                })
+                .then(data => {
+                    teacherName = data;
+                    console.log(teacherName);
+                })
+                .catch((error) => {
+                    alert("Login failed: " + error.message);
+                });
+
+            fetch(`http://localhost:8080/api/students/tget?teacher=${teacherName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Login failed");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(studentInfomation => {
+                        const studentData = {
+                            date: studentInfomation.date,
+                            title: studentInfomation.title,
+                            studentFirstName: studentInfomation.studentFirstName,
+                            studentLastName: studentInfomation.studentLastName,
+                            studentId: studentInfomation.studentId,
+                            email: studentInfomation.email,
+                            studentYear: studentInfomation.studentYear,
+                            studyField: studentInfomation.studyField,
+                            advisor: studentInfomation.advisor,
+                            addressNumber: studentInfomation.addressNumber,
+                            moo: studentInfomation.moo,
+                            tumbol: studentInfomation.tumbol,
+                            amphur: studentInfomation.amphur,
+                            province: studentInfomation.province,
+                            postalCode: studentInfomation.postalCode,
+                            mobilePhone: studentInfomation.mobilePhone,
+                            phone: studentInfomation.phone,
+                            cause: studentInfomation.cause,
+                            addSubjectList: studentInfomation.addSubjectList,
+                            dropSubjectList: studentInfomation.dropSubjectList
+                        };
+                        studentAllData.push(studentData);
+                    });
+                    console.log(studentAllData);
+                })
+                .catch((error) => {
+                    alert("Login failed: " + error.message);
+                });
+            return studentAllData;
+        }
+
+        
 
 
     </script>
