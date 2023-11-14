@@ -36,13 +36,16 @@ public class LoginRepository {
 
             // Set request headers
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Application-Key", accessToken);
+            connection.setRequestProperty("Application-Key", "TU2dce847e8d656aab1b9ac485aadc7a607cff975ee7f8455de5188219c06dc865143f543ba30033c336972a8d26975a69");
 
             // Enable input/output streams
             connection.setDoOutput(true);
 
+            String username = login.getEmail();
+            String password = login.getPassword();
+
             // Create the JSON payload
-            String jsonInputString = "{\"UserName\":\"{username}\",\"PassWord\":\"{password}\"}";
+            String jsonInputString = "{\"UserName\":\"" + username + "\",\"PassWord\":\"" + password + "\"}";
 
             // Write the JSON payload to the request body
             try (OutputStream os = connection.getOutputStream()) {
