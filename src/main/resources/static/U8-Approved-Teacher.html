@@ -129,7 +129,7 @@
 
 
 
-    <div class="d-flex" style="width: 100vw;">
+    <div class="d-flex" style="width: 100vw;" id="Form-container">
         <div class="p-2 shadow p-3 mb-5 bg-white rounded" style="width: 20%; height: 100vh;">
             <div class="d-flex">
                 <div style="padding-left: 10%;">
@@ -277,7 +277,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="addSubjectTableBody">
-                                     <!-- add table by js -->
+                                    <!-- add table by js -->
                                 </tbody>
                             </table>
                         </form>
@@ -338,48 +338,6 @@
     </div>
 
     <script>
-        function generateSubjectForm() {
-            const numberOfSubjects = document.getElementById(`numberOfSubjectsToAdd`).value;
-            const tableBody = document.getElementById('addSubjectTableBody');
-
-            tableBody.innerHTML = '';
-
-            for (let i = 1; i <= numberOfSubjects; i++) {
-                const subjectRow = document.createElement('tr');
-                subjectRow.innerHTML = `
-                <td>${i}</td>
-                <td><input type="text" name="subjectCodeToAdd${i}" required></td>
-                <td><input type="text" name="subjectNameToAdd${i}" required></td>
-                <td><input type="text" name="sectionToAdd${i}" required></td>
-                <td><input type="text" name="dateToAdd${i}" required></td>
-                <td><input type="text" name="gitToAdd${i}" required></td>
-            `;
-
-                tableBody.appendChild(subjectRow);
-            }
-        }
-
-        function generateDeleteSubjectForm() {
-            const numberOfSubjects = document.getElementById('numberOfSubjectsToDelete').value;
-            const tableBody = document.getElementById('deleteSubjectTableBody');
-
-            tableBody.innerHTML = '';
-
-            for (let i = 1; i <= numberOfSubjects; i++) {
-                const subjectRow = document.createElement('tr');
-                subjectRow.innerHTML = `
-              <td>${i}</td>
-              <td><input type="text" name="subjectCodeToDelete${i}" required></td>
-              <td><input type="text" name="subjectNameToDelete${i}" required></td>
-              <td><input type="text" name="sectionToDelete${i}" required></td>
-              <td><input type="text" name="dateToDelete${i}" required></td>
-              <td><input type="text" name="gitToDelete${i}" required></td>
-          `;
-
-                tableBody.appendChild(subjectRow);
-            }
-        }
-
 
         function getStudentList() {
             let teacherName;
@@ -440,8 +398,248 @@
             return studentAllData;
         }
 
-        
+        function createForm() {
+            // Assuming studentAllData is the array obtained from getStudentList()
+            const studentAllData = getStudentList();
 
+            // Assuming you have a Form-container element in your HTML
+            const formContainer = document.getElementById("Form-container");
+
+            // Loop through each student's data
+            for (let i = 0; i < studentAllData.length; i++) {
+                const formDiv = `
+                <div class="p-2" style="width: 80%;">
+                    <div class="d-flex justify-content-center mt-5">
+
+                        <div class="d-flex gap-2">
+                            <h1>คำร้องขอเพิ่ม-ถอน รายวิชา</h1>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center ">
+                        <div class="d-flex gap-2">
+                            <h4>คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยธรรมศาสตร์ ศูนย์รังสิต</h4>
+                        </div>
+                    </div>
+                    <br>
+
+
+
+                    <div class="d-flex justify-content-end">
+                        วันที่:
+                        &nbsp;
+                        <p>
+                        <div class="d-flex justify-end" style="width: 200px;">
+                            <input name="date" id="form${i}date" class="form-control" type="date" required />
+                        </div>
+                    </div>
+                    <div class="container d-flex  flex-column  mt-4">
+                        <form id="myForm">
+                            <br>
+
+
+                            <div class="d-flex gap-4 ">
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text "><b>ข้าพเจ้า</b></span>
+                                        &nbsp;
+                                    </div>
+
+                                    <select class="form-select" aria-label="Default select example" style="width: 100px;">
+                                        <option required selected>คำนำหน้า</option>
+                                        <option value="1">นาย</option>
+                                        <option value="2">นาง</option>
+                                        <option value="3">นางสาว</option>
+                                    </select>
+                                    <input required id="form${i}studentFirstname" required type="text"
+                                        class="form-control form-control-sm" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" style="width:300px;">
+                                    <input required id="form${i}studentLastname" required type="text"
+                                        class="form-control form-control-sm" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" style="width: 300px;">
+                                </div>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><b>เลขทะเบียน</b></span>
+                                </div>
+                                <div>
+                                    <input required pattern=".{10}" id="form${i}studentId" type="text" class="form-control"
+                                        aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 300px;">
+
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex gap-4 ">
+                                <div class="input-group input-group-sm mb-9">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" style="height: 37px;"><b>ชั้นปี</b></span>
+                                    </div>
+                                    <select id="studentYear" class="form-select" aria-label="Small"
+                                        style="height: 37px; width: 10px;" required>
+                                        <option selected>ชั้นปีที่</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" style="height: 37px;"><b>สาขาวิชา</b></span>
+                                    </div>
+                                    <input required id="form${i}studyField" class="form-control form-control-sm" style="height: 37px;"
+                                        aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm"><b>อาจารย์ที่ปรึกษา</b></span>
+                                </div>
+
+                                <div>
+                                    <input required id="form${i}advisor" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" style="width: 400px;">
+                                </div>
+                            </div>
+
+
+
+                    </div>
+
+                    <div class="container d-flex  flex-column align-items mt-5">
+                        <div class="d-flex gap-2">
+                            <h5><b>รายละเอียดขอเพิ่ม-ถอน รายวิชา</b></h5>
+                        </div>
+                    </div>
+                    <div class="container d-flex  flex-column  mt-4">
+                        <div class=tableSubject>
+                            <br>&nbsp;&nbsp;&nbsp;
+                            <label for="numberOfSubjectsToAdd">จำนวนวิชาที่ต้องการเพิ่ม :</label>
+                            <div class="d-flex justify-content-center">
+                                <form id="addSubjectForm">
+                                    <table id="addSubjectTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>รหัสวิชา</th>
+                                                <th>ชื่อวิชา</th>
+                                                <th>Section</th>
+                                                <th>วัน</th>
+                                                <th>หน่วยกิต</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="addSubjectTableBody">
+                                            <!-- add table by js -->
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <form id="deleteSubjectForm">
+                                <br>&nbsp;&nbsp;&nbsp;
+                                <label for="numberOfSubjectsToDelete">จำนวนวิชาที่ต้องการถอน :</label>
+                                <div class="d-flex justify-content-center">
+                                    <table id="deleteSubjectTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>รหัสวิชา</th>
+                                                <th>ชื่อวิชา</th>
+                                                <th>Section</th>
+                                                <th>วัน</th>
+                                                <th>หน่วยกิต</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="deleteSubjectTableBody">
+                                            <!-- add table by js -->
+                                        </tbody>
+                                    </table>
+                            </form>
+                        </div>
+
+                        <div class="d-flex p-4">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">เหตุผลที่ขอเพิ่ม-ถอน</label>
+                                    <input type="text" class="form-control" id="form${i}cause"
+                                        style="width: 600px; height: 60px; font-size: 14px;">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row">
+                        <div class="d-flex justify-content-end ">
+                            <button type="button" class="btn btn-success mr-5 ml-5">APPROVED</button>
+                        </div>
+
+                        <div class="d-flex justify-content-end ">
+                            <button type="button" class="btn btn-danger ">NOT APPROVED</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 100%; height: 20%;"
+                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <br>
+                `
+
+                // Create and append the "Add" table
+                const addTable = createTable(studentAllData[i].addSubjectList, i, "add");
+                formDiv.appendChild(addTable);
+
+                // Create and append the "Drop" table
+                const dropTable = createTable(studentAllData[i].dropSubjectList, i, "drop");
+                formDiv.appendChild(dropTable);
+
+                formContainer.appendChild(formDiv);
+            }
+        }
+
+
+        // Function to create a table based on the subjectList
+        function createTable(subjectList, formIndex, type) {
+            const table = document.createElement("table");
+            table.id = `form${formIndex}-${type}`;
+
+            // Create the table header
+            const thead = document.createElement("thead");
+            const headerRow = document.createElement("tr");
+            const headers = ["No.", "รหัสวิชา", "ชื่อวิชา", "Section", "วัน", "หน่วยกิต"];
+            headers.forEach(headerText => {
+                const th = document.createElement("th");
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Create the table body
+            const tbody = document.createElement("tbody");
+            for (let j = 0; j < subjectList.length; j++) {
+                const rowData = subjectList[j];
+                const tr = document.createElement("tr");
+                const cellValues = [j + 1, rowData.subjectCode, rowData.subjectName, rowData.section, rowData.date, rowData.git];
+
+                // Create and append cells
+                for (const cellValue of cellValues) {
+                    const td = document.createElement("td");
+                    td.textContent = cellValue;
+                    tr.appendChild(td);
+                }
+
+                tbody.appendChild(tr);
+            }
+            table.appendChild(tbody);
+
+            return table;
+        }
 
     </script>
     </div>
