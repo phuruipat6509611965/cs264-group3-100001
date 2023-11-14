@@ -18,18 +18,6 @@ public class TeacherRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public String getTeacherByEmail(String email){
-        try {
-            String sqlTeacher = "SELECT * FROM Teacher where email = ?";
-            List<Teacher> teacher = jdbcTemplate.query(sqlTeacher, new BeanPropertyRowMapper(Teacher.class), email);
-            String teacherName = teacher.get(0).getTeacherName();
-            return teacherName;
-
-        } catch (IncorrectResultSizeDataAccessException e) {
-            return null;
-        }
-    }
-
     public List<List<Student>> getStudentByTeacher(String teacher){
         try {
             List<List<Student>> students = new ArrayList<>();
@@ -42,14 +30,14 @@ public class TeacherRepository {
                 students.add(student);
             }
             for (List<Student> a: students){
-                sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ?";
+                sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ? AND subjectTeacherCheck = ?";
 
                 for (Student s : a) {
-                    List<Subject> addSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Register");
+                    List<Subject> addSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Register", false);
                     s.setAddSubjectList(addSubjectList.toArray(new Subject[0]));
                 }
                 for(Student s : a) {
-                    List<Subject> dropSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Withdraw");
+                    List<Subject> dropSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Withdraw", false);
                     s.setDropSubjectList(dropSubjectList.toArray(new Subject[0]));
                 }
 
@@ -60,5 +48,10 @@ public class TeacherRepository {
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;
         }
+    }
+
+    public void teacherApprove(Student student, boolean check, String subjectCode){
+        String sqlStudent = "UPDATE Subject SET subjectTeacherCheck=true, subjectTeacherApprove=? WHERE studentId=? AND subjectCode=?";
+        jdbcTemplate.update(sqlStudent,check, student.getStudentId(), subjectCode);
     }
 }

@@ -25,4 +25,5 @@ public class Student {
     private String cause;
     private Subject[] addSubjectList;
     private Subject[] dropSubjectList;
+
 }

@@ -41,11 +41,18 @@ public class LoginRepository {
             // Enable input/output streams
             connection.setDoOutput(true);
 
-            String username = login.getEmail();
+            String username = login.getUsername();
             String password = login.getPassword();
 
             // Create the JSON payload
             String jsonInputString = "{\"UserName\":\"" + username + "\",\"PassWord\":\"" + password + "\"}";
+
+            /*
+            {
+                "username" : "studentID",
+                "password": "password"
+            }
+             */
 
             // Write the JSON payload to the request body
             try (OutputStream os = connection.getOutputStream()) {
@@ -84,4 +91,5 @@ public class LoginRepository {
             return null;
         }
     }
+
 }

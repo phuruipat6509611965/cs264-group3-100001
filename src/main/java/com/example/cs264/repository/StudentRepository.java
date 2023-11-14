@@ -27,23 +27,23 @@ public class StudentRepository implements StudentRepositoryInterface {
         jdbcTemplate.update(student_data, student.getDate(), student.getTitle(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId(), student.getEmail(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause());
 
         //Save subject
-        String subject_data = "Insert INTO Subject (studentId, subjectCode, subjectName, subjectSection, subjectDate, subjectCredit, subjectTeacher, subjectTeacherCheck, registeration_type)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String subject_data = "Insert INTO Subject (studentId, subjectCode, subjectName, subjectSection, subjectDate, subjectCredit, subjectTeacher, subjectTeacherCheck, subjectTeacherApprove, registeration_type)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         //Register subject
         for(Subject s: student.getAddSubjectList()){
-            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(), "Register");
+            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(),s.getSubjectTeacherApprove(), "Register");
         }
         //Withdraw subject
         for(Subject s: student.getDropSubjectList()){
-            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(), "Withdraw");
+            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(),s.getSubjectTeacherApprove(), "Withdraw");
         }
 
 
     }
 
-    public List<Student> getStudentByEmail(String email) {
+    public List<Student> getStudentByEmail(String username) {
         try {
-            String sqlStudent = "SELECT * FROM Student where email = ?";
-            List<Student> students = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Student.class), email);
+            String sqlStudent = "SELECT * FROM Student where studentId = ?";
+            List<Student> students = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Student.class), username);
             String sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ?";
 
             for (Student s : students) {

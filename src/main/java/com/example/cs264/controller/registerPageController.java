@@ -1,6 +1,5 @@
 package com.example.cs264.controller;
 
-import com.example.cs264.model.CheckLogin;
 import com.example.cs264.model.Login;
 import com.example.cs264.model.Student;
 import com.example.cs264.repository.LoginRepository;
@@ -24,19 +23,23 @@ public class registerPageController {
     @Autowired
     TeacherRepository teacherRepository;
 
+
+    //Login authentication by input username(studentID) and password through body
     @PostMapping("/login")
     public String loginConfirm(@RequestBody Login login){
         return loginRepository.loginConfirmation(login);
     }
 
+    //Create new student subject data
     @PostMapping("/add")
     public void addStudent(@RequestBody Student student) {
         studentRepository.createStudent(student);
     }
 
+    //Get student by username(studentID)
     @GetMapping("/req")
-    public List<Student> reqStudent(@RequestParam(name = "email", required = true) String email){
-        return studentRepository.getStudentByEmail(email);
+    public List<Student> reqStudent(@RequestParam(name = "username", required = true) String username){
+        return studentRepository.getStudentByEmail(username);
     }
 
     @PostMapping("/update")
@@ -54,9 +57,10 @@ public class registerPageController {
         return teacherRepository.getStudentByTeacher(teacher);
     }
 
-    @GetMapping("/tname")
-    public String getTeacherName(@RequestParam(name = "email", required = true) String email){
-        return teacherRepository.getTeacherByEmail(email);
+    //Use to
+    @GetMapping("/tcheck")
+    public void teacherApprove(@RequestBody Student  student, @RequestParam boolean check, @RequestParam String subjectCode){
+        teacherRepository.teacherApprove(student, check, subjectCode);
     }
 
 }
