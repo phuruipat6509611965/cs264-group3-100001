@@ -107,7 +107,9 @@
                                 <h5>Username: </h5>
                             </div>
                             <input required type="text" class="form-control" id="username"
-                                style="width: 400px; height: 50px; font-size: 14px; border-radius:200px;">
+                                style="width: 400px; height: 50px; font-size: 14px; border-radius:200px;"
+                                onchange="invalidDisplyNone()"
+                                >
                         </div>
                     </div>
                 </div>
@@ -118,7 +120,9 @@
                                 <h5>Password: </h5>
                             </div>
                             <input required type="text" class="form-control" id="password"
-                                style="width: 400px; height: 50px; font-size: 14px; border-radius:200px ;">
+                                style="width: 400px; height: 50px; font-size: 14px; border-radius:200px ;"
+                                onchange="invalidDisplyNone()"
+                                >
                         </div>
                     </div>
                 </div>
@@ -188,6 +192,10 @@
                     });
             });
         });
+
+        function invalidDisplyNone(){
+            invalidLabel.style.display = 'none';
+        }
 
     </script>
 
