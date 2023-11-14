@@ -123,6 +123,8 @@
                                 style="width: 400px; height: 50px; font-size: 14px; border-radius:200px ;"
                                 onchange="invalidDisplyNone()" 
                                 >
+                                <!-- An element to toggle between password visibility -->
+                            <input type="checkbox" onclick="showPassword()" style = "margin-top: 20px; margin-right: 10px; font-size: 16px;">Show Password 
                         </div>
                     </div>
                 </div>
@@ -139,6 +141,17 @@
         </form>
     </div>
     <script>
+
+        function showPassword() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+
+
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
             const url = "http://localhost:8080/api/student/login";
