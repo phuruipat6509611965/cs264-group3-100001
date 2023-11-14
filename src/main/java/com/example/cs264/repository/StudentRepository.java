@@ -30,11 +30,11 @@ public class StudentRepository implements StudentRepositoryInterface {
         String subject_data = "Insert INTO Subject (studentId, subjectCode, subjectName, subjectSection, subjectDate, subjectCredit, subjectTeacher, subjectTeacherCheck, subjectTeacherApprove, registeration_type)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         //Register subject
         for(Subject s: student.getAddSubjectList()){
-            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(),s.getSubjectTeacherApprove(), "Register");
+            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(), false, "Register");
         }
         //Withdraw subject
         for(Subject s: student.getDropSubjectList()){
-            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(),s.getSubjectTeacherApprove(), "Withdraw");
+            jdbcTemplate.update(subject_data, student.getStudentId(), s.getSubjectCode(), s.getSubjectName(), s.getSubjectSection(), s.getSubjectDate(), s.getSubjectCredit(), s.getSubjectTeacher(), s.getSubjectTeacherCheck(), false, "Withdraw");
         }
 
 

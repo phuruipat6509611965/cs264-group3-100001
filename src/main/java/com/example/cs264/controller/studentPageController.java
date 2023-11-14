@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/student")
 @CrossOrigin
-public class registerPageController {
+public class studentPageController {
 
     @Autowired
     LoginRepository loginRepository;
@@ -52,15 +52,5 @@ public class registerPageController {
         studentRepository.deleteById(studentId);
     }
 
-    @GetMapping("/tget")
-    public List<List<Student>> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
-        return teacherRepository.getStudentByTeacher(teacher);
-    }
-
-    //Use to
-    @GetMapping("/tcheck")
-    public void teacherApprove(@RequestBody Student  student, @RequestParam boolean check, @RequestParam String subjectCode){
-        teacherRepository.teacherApprove(student, check, subjectCode);
-    }
 
 }
