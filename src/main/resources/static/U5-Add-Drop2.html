@@ -240,6 +240,7 @@
                 <a href="U3-Add-Drop1.html"><button type="button" class="btn btn-danger mr-4" id="submit">Submit</button></a>
             </div>
         </div>
+
     </div>
     
     <script>
@@ -361,7 +362,6 @@
             const check = document.getElementById(`subjectTeacherToAdd${i}`).value;
           
             const subject = {
-            studentID : gstudentId,
             subjectCode : subjectCode,
             subjectName : subjectName,
             subjectSection : section,
@@ -393,7 +393,6 @@
             console.log(subjectCode, subjectName, section, date, git);
             
             const subject = {
-            studentID : gstudentId,
             subjectCode : subjectCode,
             subjectName : subjectName,
             subjectSection : section,
@@ -401,7 +400,6 @@
             subjectCredit : git,
             subjectTeacher : check,
             subjectTeacherCheck : false,
-            registeration_type : "Withdraw"
             };
 
             formData.dropSubjectList.push(subject);
@@ -431,10 +429,13 @@
 
         }
 
-        document.getElementById('submit').addEventListener('click', function(event) {
-            collectData();
-        });
+        const notification = document.getElementById('notification');
 
+        document.getElementById('submit').addEventListener('click', function(event) {
+            event.preventDefault();
+            collectData();
+            alert('ส่งข้อมูลสำเร็จ');
+        });
 
     </script>
     </div>
