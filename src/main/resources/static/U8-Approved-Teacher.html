@@ -604,6 +604,16 @@
                 formDiv.getElementById("deleteSubjectTable").appendChild(dropTable);
 
 
+                formDiv.getElementById(`form${i}date`).value = studentAllData[i].date;
+                formDiv.getElementById(`form${i}studentFirstname`).value = studentAllData[i].studentFirstName;
+                formDiv.getElementById(`form${i}studentLastname`).value = studentAllData[i].studentLastName;
+                formDiv.getElementById(`form${i}studentId`).value = studentAllData[i].studentId;
+                formDiv.getElementById(`form${i}studentYear`).value = studentAllData[i].studentYear;
+                formDiv.getElementById(`form${i}studyField`).value = studentAllData[i].studyField;
+                formDiv.getElementById(`form${i}advisor`).value = studentAllData[i].advisor;
+                formDiv.getElementById(`form${i}cause`).value =  studentAllData[i].cause;
+
+
                 formContainer.appendChild(formDiv);
             }
         }
