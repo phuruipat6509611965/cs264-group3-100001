@@ -119,9 +119,9 @@
                             <div class="d-flex gap-2">
                                 <h5>Password: </h5>
                             </div>
-                            <input required type="text" class="form-control" id="password"
+                            <input required type="password" class="form-control" id="password"
                                 style="width: 400px; height: 50px; font-size: 14px; border-radius:200px ;"
-                                onchange="invalidDisplyNone()"
+                                onchange="invalidDisplyNone()" 
                                 >
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                 sessionStorage.setItem('username', username);
 
                 const formData = {
-                    'email': username,
+                    'username': username,
                     'password': password
                 };
 
