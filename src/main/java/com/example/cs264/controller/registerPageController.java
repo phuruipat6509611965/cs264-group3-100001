@@ -25,10 +25,8 @@ public class registerPageController {
     TeacherRepository teacherRepository;
 
     @PostMapping("/login")
-    public CheckLogin loginConfirm(@RequestBody Login login){
-        CheckLogin check = new CheckLogin();
-        check.setLogin(loginRepository.loginConfirmation(login.getEmail(), login.getPassword()));
-        return check;
+    public String loginConfirm(@RequestBody Login login){
+        return loginRepository.loginConfirmation(login);
     }
 
     @PostMapping("/add")
