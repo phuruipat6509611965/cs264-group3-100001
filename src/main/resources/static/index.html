@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <div class="justify-content-center" id="invalid-text" style="display: none;">
-                    <p style="color: #c0062f;">Incorrect email or password</p>
+                    <p style="color: #c0062f;">Incorrect username or password</p>
                 </div>
                 <div class="d-flex justify-content-center mb-3 ">
                     <div class="d-flex justify-content-end">
@@ -157,7 +157,7 @@
                 };
 
                 const jsonData = JSON.stringify(formData, null, 2);
-                console.log(jsonData);
+                //console.log(jsonData);
 
                 fetch(url, {
                     method: "POST",
@@ -175,10 +175,18 @@
 
                     .then((data) => {
                         // Assuming the server responds
-                        if (data.login) {
-                            if (username.includes('@dome')) {
+
+                        //loginData = JSON.parse(data);
+                        //console.log(data);
+                        //console.log(typeof data);
+                        //console.log(data["type"]);
+                        //console.log(typeof data["type"]);
+                        console.log(data);
+
+                        if (data) {
+                            if (data["type"] == "student") {
                                 window.location.href = "Profile.html"
-                            } else if (username.includes('@staff')) {
+                            } else if (loginData.includes('employee')) {
                                 window.location.href = "U8-Approved-Teacher.html"
                             } else {
                                 invalidLabel.style.display = 'flex';
@@ -188,7 +196,7 @@
                         }
                     })
                     .catch((error) => {
-                        alert("Login failed: " + error.message);
+                        invalidLabel.style.display = 'flex';
                     });
             });
         });
