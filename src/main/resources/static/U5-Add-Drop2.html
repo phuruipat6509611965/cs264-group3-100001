@@ -361,7 +361,6 @@
             const check = document.getElementById(`subjectTeacherToAdd${i}`).value;
           
             const subject = {
-            studentID : gstudentId,
             subjectCode : subjectCode,
             subjectName : subjectName,
             subjectSection : section,
@@ -393,7 +392,6 @@
             console.log(subjectCode, subjectName, section, date, git);
             
             const subject = {
-            studentID : gstudentId,
             subjectCode : subjectCode,
             subjectName : subjectName,
             subjectSection : section,
@@ -401,7 +399,6 @@
             subjectCredit : git,
             subjectTeacher : check,
             subjectTeacherCheck : false,
-            registeration_type : "Withdraw"
             };
 
             formData.dropSubjectList.push(subject);
