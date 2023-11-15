@@ -92,7 +92,7 @@
 
 <body>
     <div class="top-bar">
-        <h1><img src="logomo.png" alt="โลโก้" class="top-right"></h1>
+        <img src="logomo.png" alt="โลโก้" class="top-right d-flex">
         <h2>มหาวิทยาลัยธรรมศาสตร์</h2>
         <h3>Thammasat University</h3>
     </div>
@@ -131,6 +131,9 @@
                 <div class="justify-content-center" id="invalid-text" style="display: none;">
                     <p style="color: #c0062f;">Incorrect username or password</p>
                 </div>
+                <div class="justify-content-center" id="fail-login-text" style="display: none;">
+                    <p style="color: #c0062f;">Login failed</p>
+                </div>
                 <div class="d-flex justify-content-center mb-3 ">
                     <div class="d-flex justify-content-end">
                         <button style="height: 50px; width: 400px; border-radius:250px ;" type="submit"
@@ -156,6 +159,7 @@
             const form = document.getElementById("myForm");
             const url = "http://localhost:8080/api/student/login";
             const invalidLabel = document.getElementById("invalid-text")
+            const loginFailLabel = document.getElementById("fail-login-text")
 
             form.addEventListener("submit", function (event) {
                 event.preventDefault(); // Prevent the form from actually submitting
@@ -209,12 +213,13 @@
                         }
                     })
                     .catch((error) => {
-                        invalidLabel.style.display = 'flex';
+                        loginFailLabel.style.display = 'flex';
                     });
             });
         });
 
         function invalidDisplyNone(){
+            loginFailLabel.style.display = 'none';
             invalidLabel.style.display = 'none';
         }
 
