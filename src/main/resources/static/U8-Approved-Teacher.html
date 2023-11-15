@@ -346,7 +346,7 @@
             fetch(`http://localhost:8080/api/students/tget?teacher=${teacherName}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Login failed");
+                        throw new Error("Fail to Get student");
                     }
                     return response.json();
                 })
