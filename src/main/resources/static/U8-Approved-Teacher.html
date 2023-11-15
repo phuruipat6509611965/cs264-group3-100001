@@ -340,23 +340,9 @@
     <script>
 
         function getStudentList() {
-            let teacherName;
+            let teacherName = sessionStorage.getItem("teacherName");
             let studentAllData = [];
-            fetch(`http://localhost:8080/api/students/tname?email=${sessionStorage.getItem('username')}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Login failed");
-                    }
-                    return response;
-                })
-                .then(data => {
-                    teacherName = data;
-                    console.log(teacherName);
-                })
-                .catch((error) => {
-                    alert("Login failed: " + error.message);
-                });
-
+            
             fetch(`http://localhost:8080/api/students/tget?teacher=${teacherName}`)
                 .then(response => {
                     if (!response.ok) {
