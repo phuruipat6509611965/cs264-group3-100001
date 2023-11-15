@@ -47,7 +47,7 @@ public class LoginRepository {
             // Create the JSON payload
             String jsonInputString = "{\"UserName\":\"" + username + "\",\"PassWord\":\"" + password + "\"}";
 
-            /*
+            /*  How body should look
             {
                 "username" : "studentID",
                 "password": "password"

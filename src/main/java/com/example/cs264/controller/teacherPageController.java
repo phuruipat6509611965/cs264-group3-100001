@@ -23,12 +23,13 @@ public class teacherPageController {
     @Autowired
     TeacherRepository teacherRepository;
 
+    //Get every student who had subject with teacher and also has not been checked yet(subjectTeacherCheck=false)
     @GetMapping("/tget")
     public List<List<Student>> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
         return teacherRepository.getStudentByTeacher(teacher);
     }
 
-    //Use to
+    //Use to approve or deny student's subject(subjectTeacherApprove true or false) and change subjectTeacherCheck to true
     @GetMapping("/tcheck")
     public void teacherApprove(@RequestBody Student  student, @RequestParam boolean check, @RequestParam String subjectCode){
         teacherRepository.teacherApprove(student, check, subjectCode);

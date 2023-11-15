@@ -42,11 +42,13 @@ public class studentPageController {
         return studentRepository.getStudentByEmail(username);
     }
 
+    //Update student information
     @PostMapping("/update")
     public void updateStudent(@RequestBody Student  student, @RequestParam String studentId){
         studentRepository.updateStudent(student, studentId);
     }
 
+    //Delete student from table
     @GetMapping("/del")
     public void deleteById(@RequestParam String studentId){
         studentRepository.deleteById(studentId);
