@@ -338,11 +338,12 @@
     </div>
 
     <script>
+        let subjectCode;
 
         function getStudentList() {
             let teacherName = sessionStorage.getItem("teacherName");
             let studentAllData = [];
-            
+
             fetch(`http://localhost:8080/api/students/tget?teacher=${teacherName}`)
                 .then(response => {
                     if (!response.ok) {
@@ -393,7 +394,8 @@
 
             // Loop through each student's data
             for (let i = 0; i < studentAllData.length; i++) {
-                const formDiv = `
+                const formDiv = document.createElement("div");
+                formDiv.innerHTML = `
                 <div class="p-2" style="width: 80%;">
                     <div class="d-flex justify-content-center mt-5">
 
@@ -566,11 +568,11 @@
 
                     <!-- <div class="d-flex flex-row">
                         <div class="d-flex justify-content-end ">
-                            <button type="button" class="btn btn-success mr-5 ml-5">APPROVED</button>
+                            <button type="button" class="btn btn-success mr-5 ml-5 form${i}approved">APPROVED</button>
                         </div>
 
                         <div class="d-flex justify-content-end ">
-                            <button type="button" class="btn btn-danger ">NOT APPROVED</button>
+                            <button type="button" class="btn btn-danger form${i}denied">NOT APPROVED</button>
                         </div>
                     </div>
                     <br>
@@ -579,7 +581,8 @@
                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <br> -->
-                `
+                `;
+                
 
                 // Create and append the "Add" table
                 const addTable = createTable(studentAllData[i].addSubjectList, i, "add");
@@ -597,8 +600,48 @@
                 formDiv.getElementById(`form${i}studentYear`).value = studentAllData[i].studentYear;
                 formDiv.getElementById(`form${i}studyField`).value = studentAllData[i].studyField;
                 formDiv.getElementById(`form${i}advisor`).value = studentAllData[i].advisor;
-                formDiv.getElementById(`form${i}cause`).value =  studentAllData[i].cause;
+                formDiv.getElementById(`form${i}cause`).value = studentAllData[i].cause;
 
+                const approvedBtn = formDiv.querySelector(`form${i}approved`);
+                const deniedBtn = formDiv.getElementById(`form${i}denied`);
+
+                approvedBtn.addEventListener("click", function() {
+                    fetch(`http://localhost:8080/api/teacher/tcheck?check=${true}&subjectCode=${subjectCode}`,{
+                        method:"POST",
+                        headers:{
+                            'Content-Type':'application/json'
+                            },
+                        body:JSON.stringify(studentAllData[i], null, 2)
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Login failed");
+                        }
+                        formDiv.removeChild(formDiv); // Remove form
+                        return response.json();
+                    })
+                    .catch(error => {alert("Error");});
+
+                });
+
+                deniedBtn.addEventListener("click", function() {
+                    fetch(`http://localhost:8080/api/teacher/tcheck?check=${false}&subjectCode=${subjectCode}`,{
+                        method:"POST",
+                        headers:{
+                            'Content-Type':'application/json'
+                            },
+                        body:JSON.stringify(studentAllData[i], null, 2)
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            formDiv.removeChild(formDiv); // Remove form
+                            throw new Error("Login failed");
+                        }
+                        return response.json();
+                    })
+                    .catch(error => {alert("Error");});
+
+                });
 
                 formContainer.appendChild(formDiv);
             }
@@ -626,8 +669,9 @@
             const tbody = document.createElement("tbody");
             for (let j = 0; j < subjectList.length; j++) {
                 const rowData = subjectList[j];
+                subjectCode = rowData.subjectCode;
                 const tr = document.createElement("tr");
-                const cellValues = [j + 1, rowData.subjectCode, rowData.subjectName, rowData.section, rowData.date, rowData.git];
+                const cellValues = [j + 1, rowData.subjectCode, rowData.subjectName, rowData.subjectSection, rowData.subjectDate, rowData.subjectCredit];
 
                 // Create and append cells
                 for (const cellValue of cellValues) {
@@ -643,7 +687,7 @@
             return table;
         }
 
-        createForm()
+        createForm()       
 
     </script>
     </div>
