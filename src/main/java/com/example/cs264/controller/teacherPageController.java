@@ -24,9 +24,9 @@ public class teacherPageController {
     @Autowired
     TeacherRepository teacherRepository;
 
-    //Get every student who had subject with teacher and also has not been checked yet(subjectTeacherCheck=false)
+    //Get each student who had subject with teacher and also has not been checked yet(subjectTeacherCheck=false)
     @GetMapping("/tget")
-    public List<List<Student>> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
+    public List<Student> getStudentByTeacher(@RequestParam(name = "teacher", required = true) String teacher){
         return teacherRepository.getStudentByTeacher(teacher);
     }
 
