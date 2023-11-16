@@ -40,7 +40,7 @@ public class StudentRepository implements StudentRepositoryInterface {
 
     }
 
-    public List<Student> getStudentByEmail(String username) {
+    public List<Student> getStudentByUsername(String username) {
         try {
             String sqlStudent = "SELECT * FROM Student where studentId = ?";
             List<Student> students = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Student.class), username);

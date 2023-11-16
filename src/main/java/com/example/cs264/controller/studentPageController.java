@@ -39,7 +39,7 @@ public class studentPageController {
     //Get student by username(studentID)
     @GetMapping("/req")
     public List<Student> reqStudent(@RequestParam(name = "username", required = true) String username){
-        return studentRepository.getStudentByEmail(username);
+        return studentRepository.getStudentByUsername(username);
     }
 
     //Update student information
