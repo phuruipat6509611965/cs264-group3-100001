@@ -12,36 +12,29 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Repository
 public class TeacherRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<List<Student>> getStudentByTeacher(String teacher){
+    public List<Student> getStudentByTeacher(String teacher){
         try {
-            List<List<Student>> students = new ArrayList<>();
-            String sqlStudent = "SELECT * FROM Subject where subjectTeacher = ?";
-            List<Subject> subjects = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Subject.class), teacher);
-            String sqlSubject = "SELECT * FROM Student where studentID=?";
-
-            for (Subject s : subjects) {
-                List<Student> student = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Student.class), s.getStudentID());
-                students.add(student);
-            }
-            for (List<Student> a: students){
-                sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ? AND subjectTeacherCheck = ?";
-
-                for (Student s : a) {
-                    List<Subject> addSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Register", false);
+            //List<List<Student>> students = new ArrayList<>();
+            String sqlStudent = "SELECT * FROM Subject where subjectTeacher = ? AND subjectTeacherCheck=?";
+            List<Subject> subjects = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Subject.class), teacher, false);
+            String sqlSubject = "SELECT TOP(1) * FROM Student where studentID=?";
+            List<Student> students = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Student.class), subjects.get(0).getStudentID());
+            sqlSubject = "SELECT * FROM Subject where studentId = ? AND registeration_type = ?";
+                for (Student s : students) {
+                    List<Subject> addSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Register");
                     s.setAddSubjectList(addSubjectList.toArray(new Subject[0]));
                 }
-                for(Student s : a) {
-                    List<Subject> dropSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Withdraw", false);
+                for (Student s : students) {
+                    List<Subject> dropSubjectList = jdbcTemplate.query(sqlSubject, new BeanPropertyRowMapper<>(Subject.class), s.getStudentId(), "Withdraw");
                     s.setDropSubjectList(dropSubjectList.toArray(new Subject[0]));
                 }
-
-            }
 
             return students;
 

@@ -23,8 +23,8 @@ public class StudentRepository implements StudentRepositoryInterface {
     public void createStudent(Student student) {
 
         //Save student data into table
-        String student_data = "Insert INTO Student (date, title, studentFirstName, studentLastName, studentId, email, studentYear,  studyField, advisor, addressNumber, moo, tumbol, amphur, province, postalCode, mobilePhone, phone ,cause)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(student_data, student.getDate(), student.getTitle(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId(), student.getEmail(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause());
+        String student_data = "Insert INTO Student (date, title, studentFirstName, studentLastName, studentId, studentYear,  studyField, advisor, addressNumber, moo, tumbol, amphur, province, postalCode, mobilePhone, phone ,cause)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(student_data, student.getDate(), student.getTitle(), student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId(), student.getStudentYear(), student.getStudyField(), student.getAdvisor(), student.getAddressNumber(), student.getMoo(), student.getTumbol(), student.getAmphur(), student.getProvince(), student.getPostalCode(), student.getMobilePhone(), student.getPhone(), student.getCause());
 
         //Save subject
         String subject_data = "Insert INTO Subject (studentId, subjectCode, subjectName, subjectSection, subjectDate, subjectCredit, subjectTeacher, subjectTeacherCheck, subjectTeacherApprove, registeration_type)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -40,7 +40,7 @@ public class StudentRepository implements StudentRepositoryInterface {
 
     }
 
-    public List<Student> getStudentByEmail(String username) {
+    public List<Student> getStudentByUsername(String username) {
         try {
             String sqlStudent = "SELECT * FROM Student where studentId = ?";
             List<Student> students = jdbcTemplate.query(sqlStudent, new BeanPropertyRowMapper<>(Student.class), username);

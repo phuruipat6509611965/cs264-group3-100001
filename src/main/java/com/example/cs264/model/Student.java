@@ -10,7 +10,6 @@ public class Student {
     private String studentFirstName;
     private String studentLastName;
     private String studentId;
-    private String email;
     private int studentYear;
     private String studyField;
     private String advisor;
