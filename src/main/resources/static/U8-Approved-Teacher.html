@@ -344,7 +344,7 @@
             let teacherName = sessionStorage.getItem("teacherName");
             let studentAllData = [];
 
-            fetch(`http://localhost:8080/api/students/tget?teacher=${teacherName}`)
+            fetch(`http://localhost:8080/api/teacher/tget?teacher=${teacherName}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error("Fail to Get student");
@@ -602,8 +602,8 @@
                 formDiv.getElementById(`form${i}advisor`).value = studentAllData[i].advisor;
                 formDiv.getElementById(`form${i}cause`).value = studentAllData[i].cause;
 
-                const approvedBtn = formDiv.querySelector(`form${i}approved`);
-                const deniedBtn = formDiv.getElementById(`form${i}denied`);
+                const approvedBtn = formDiv.querySelector(`.form${i}approved`);
+                const deniedBtn = formDiv.querySelector(`.form${i}denied`);
 
                 approvedBtn.addEventListener("click", function() {
                     fetch(`http://localhost:8080/api/teacher/tcheck?check=${true}&subjectCode=${subjectCode}`,{
@@ -689,8 +689,10 @@
 
         createForm()       
 
+        function test(name){
+            sessionStorage.setItem('teacherName', name)
+        }
     </script>
-    </div>
 </body>
 
 </html>
