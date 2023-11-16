@@ -43,8 +43,10 @@ public class TeacherRepository {
         }
     }
 
-    public void teacherApprove(Student student, boolean check, String subjectCode){
+    public void teacherApprove(Student student, boolean check, String[] subjectCode){
         String sqlStudent = "UPDATE Subject SET subjectTeacherCheck=?, subjectTeacherApprove=? WHERE studentId=? AND subjectCode=?";
-        jdbcTemplate.update(sqlStudent,true, check, student.getStudentId(), subjectCode);
+        for (String code : subjectCode) {
+            jdbcTemplate.update(sqlStudent,true, check, student.getStudentId(), code);
+        }  
     }
 }

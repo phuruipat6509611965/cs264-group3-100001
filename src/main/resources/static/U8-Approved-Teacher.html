@@ -338,7 +338,7 @@
     </div>
 
     <script>
-        let subjectCode ;
+        let subjectCode = [];
 
         function getStudentList() {
             let teacherName = sessionStorage.getItem("teacherName");
@@ -670,6 +670,7 @@
                                         throw new Error("Login failed");
                                     }
                                     formContainer.removeChild(formDiv);
+                                    subjectCode = [];
                                     createForm();
                                     return response.json();
                                 })
@@ -697,6 +698,7 @@
                                         throw new Error("Login failed");
                                     }
                                     formContainer.removeChild(formDiv);
+                                    subjectCode = [];
                                     createForm();
                                     return response.json();
                                 })
@@ -722,7 +724,7 @@
             tbody.id = `form${formIndex}-${type}`;
             for (let j = 0; j < subjectList.length; j++) {
                 const rowData = subjectList[j];
-                subjectCode = rowData.subjectCode;
+                subjectCode.push(rowData.subjectCode);
                 const tr = document.createElement("tr");
                 const cellValues = [j + 1, rowData.subjectCode, rowData.subjectName, rowData.subjectSection, rowData.subjectDate, rowData.subjectCredit];
 
