@@ -346,11 +346,20 @@
                 fetch(`http://localhost:8080/api/teacher/tget?teacher=${teacherName}`)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error("Fail to Get student");
+                            throw new Error("Failed to get student");
                         }
                         return response.json();
                     })
                     .then(data => {
+<<<<<<< HEAD
+=======
+                        // Assuming the structure is List<Student>
+                        if (!Array.isArray(data) || data.length === 0) {
+                            throw new Error("Invalid data structure");
+                        }
+                        
+                        // Map the student information
+>>>>>>> 2101c0ef7637c4d94f7637b9b17896449de379ea
                         const studentAllData = data.map(studentInfomation => ({
                             date: studentInfomation.date,
                             title: studentInfomation.title,
@@ -377,7 +386,7 @@
                         resolve(studentAllData);
                     })
                     .catch(error => {
-                        alert("Login failed: " + error.message);
+                        alert("Failed to get student: " + error.message);
                         reject(error);
                     });
             });
@@ -407,8 +416,6 @@
                                 </div>
                             </div>
                             <br>
-
-
 
                             <div class="d-flex justify-content-end">
                                 วันที่:
@@ -615,6 +622,7 @@
                                     throw new Error("Login failed");
                                 }
                                 formDiv.removeChild(formDiv); // Remove form
+                                createForm();
                                 return response.json();
                             })
                             .catch(error => { alert("Error"); });
@@ -630,9 +638,10 @@
                         })
                             .then((response) => {
                                 if (!response.ok) {
-                                    formDiv.removeChild(formDiv); // Remove form
                                     throw new Error("Login failed");
                                 }
+                                formDiv.removeChild(formDiv); // Remove form
+                                createForm()
                                 return response.json();
                             })
                             .catch(error => { alert("Error"); });
@@ -686,6 +695,7 @@
 
         createForm()
 
+        // Test
         function test(name) {
             sessionStorage.setItem('teacherName', name)
         }
