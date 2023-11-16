@@ -129,8 +129,8 @@
 
 
 
-    <div class="d-flex" style="width: 100vw;" id="Form-container">
-        <div class="p-2 shadow p-3 mb-5 bg-white rounded" style="width: 20%; height: 100vh;">
+    <div class="d-flex" style="width: 100vw;">
+        <div class="p-2 shadow p-3 mb-10 bg-white rounded" style="width: 20%; height: 100vh;">
             <div class="d-flex">
                 <div style="padding-left: 10%;">
                     <a href="U8-Approved-Teacher.html">
@@ -150,7 +150,7 @@
             </div>
         </div>
 
-        <div class="p-2" style="width: 80%;">
+        <div class="p-2" style="width: 80%;" id="Form-container">
             <!--  <div class="d-flex justify-content-center mt-5">
 
                 <div class="d-flex gap-2">
@@ -395,10 +395,12 @@
 
             // Calling getStudentList and handling the asynchronous result
             getStudentList().then(studentAllData => {
+
                 // Loop through each student's data
                 for (let i = 0; i < studentAllData.length; i++) {
                     const formDiv = document.createElement("div");
-                    formDiv.className = `form${i}`;
+                    formDiv.className = `d-flex justify-content-center`;
+                    formDiv.id = `form${i}`;
                     formDiv.innerHTML = ` 
                         <div class="p-2" style="width: 80%;">
                             <div class="d-flex justify-content-center mt-5">
@@ -419,7 +421,7 @@
                                 &nbsp;
                                 <p>
                                 <div class="d-flex justify-end" style="width: 200px;">
-                                    <input name="date" id="form${i}date" class="form-control" type="date" required />
+                                    <input name="date" id="form${i}date" class="form-control" required />
                                 </div>
                             </div>
 
@@ -447,7 +449,7 @@
                                                 class="form-control form-control-sm" aria-label="Small"
                                                 aria-describedby="inputGroup-sizing-sm" style="width:300px;">
                                             <input required id="form${i}studentLastname" required type="text"
-                                                class="form-control form-control-sm" aria-label="Small"
+                                                class="form-control form-control-sm mt-2" aria-label="Small"
                                                 aria-describedby="inputGroup-sizing-sm" style="width: 300px;">
                                         </div>
                                     </div>
@@ -594,17 +596,65 @@
                     formDiv.querySelector("#deleteSubjectTable").appendChild(dropTable);
 
                     // Set values for form fields
-                    formDiv.querySelector(`#form${i}date`).value = studentAllData[i].date;
-                    formDiv.querySelector(`#form${i}studentFirstname`).value = studentAllData[i].studentFirstName;
-                    formDiv.querySelector(`#form${i}studentLastname`).value = studentAllData[i].studentLastName;
-                    formDiv.querySelector(`#form${i}studentId`).value = studentAllData[i].studentId;
-                    formDiv.querySelector(`#form${i}studentYear`).value = studentAllData[i].studentYear;
-                    formDiv.querySelector(`#form${i}studyField`).value = studentAllData[i].studyField;
-                    formDiv.querySelector(`#form${i}advisor`).value = studentAllData[i].advisor;
+                    let data = studentAllData[i].date;
+                    let title = studentAllData[i].title;
+                    let studentFirstName = studentAllData[i].studentFirstName;
+                    let studentLastName = studentAllData[i].studentLastName;
+                    let studentId = studentAllData[i].studentId;
+                    let studentYear = studentAllData[i].studentYear;
+                    let studyField = studentAllData[i].studyField;
+                    let advisor = studentAllData[i].advisor;
+                    let addressNumber = studentAllData[i].addressNumber;
+                    let moo = studentAllData[i].moo;
+                    let tumbol = studentAllData[i].tumbol;
+                    let amphur = studentAllData[i].amphur;
+                    let province = studentAllData[i].province;
+                    let postalCode = studentAllData[i].postalCode;
+                    let mobilePhone = studentAllData[i].mobilePhone;
+                    let phone = studentAllData[i].phone;
+                    let cause = studentAllData[i].cause;
+                    let addSubjectList = studentAllData[i].addSubjectList;
+                    let dropSubjectList = studentAllData[i].dropSubjectList;
+                    
+                    // Set value to input field
+                    formDiv.querySelector(`#form${i}date`).value = data;
+                    formDiv.querySelector(`#form${i}title`).value = title;
+                    formDiv.querySelector(`#form${i}studentFirstname`).value = studentFirstName;
+                    formDiv.querySelector(`#form${i}studentLastname`).value = studentLastName;
+                    formDiv.querySelector(`#form${i}studentId`).value = studentId;
+                    formDiv.querySelector(`#form${i}studentYear`).value = studentYear;
+                    formDiv.querySelector(`#form${i}studyField`).value = studyField;
+                    formDiv.querySelector(`#form${i}advisor`).value = advisor;
+                    formDiv.querySelector(`#form${i}cause`).value = cause;
+
+                    let datas = {
+                        date: data,
+                        title: title,
+                        studentFirstName: studentFirstName,
+                        studentLastName: studentLastName,
+                        studentId: studentId,
+                        studentYear: studentYear,
+                        studyField: studyField,
+                        advisor: advisor,
+                        addressNumber: addressNumber,
+                        moo: moo,
+                        tumbol: tumbol,
+                        amphur: amphur,
+                        province: province,
+                        postalCode: postalCode,
+                        mobilePhone: mobilePhone,
+                        phone: phone,
+                        cause: cause,
+                        addSubjectList: addSubjectList,
+                        dropSubjectList: dropSubjectList
+                    };
+                    let jsonData = JSON.stringify(datas, null, 2);
+                    console.log(jsonData);
 
                     // Add event listeners for buttons
                     const approvedBtn = formDiv.querySelector(`#form${i}approved`);
                     const deniedBtn = formDiv.querySelector(`#form${i}denied`);
+
 
                     if (approvedBtn) {
                         approvedBtn.addEventListener("click", function () {
@@ -613,7 +663,7 @@
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify(studentAllData, null, 2)
+                                body: jsonData
                             })
                                 .then((response) => {
                                     if (!response.ok) {
@@ -628,7 +678,7 @@
                                     console.log(data);
                                 })
                                 .catch(error => {
-                                    alert("Error");
+                                    alert("Error" + error);
                                 });
                         });
                     }
@@ -640,7 +690,7 @@
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify(studentAllData, null, 2)
+                                body: jsonData
                             })
                                 .then((response) => {
                                     if (!response.ok) {
@@ -655,7 +705,7 @@
                                     console.log(data);
                                 })
                                 .catch(error => {
-                                    alert("Error");
+                                    alert("Error" + error);
                                 });
                         });
                     }

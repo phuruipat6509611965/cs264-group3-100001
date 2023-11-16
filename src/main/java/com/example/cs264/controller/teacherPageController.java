@@ -31,8 +31,13 @@ public class teacherPageController {
     }
 
     //Use to approve or deny student's subject(subjectTeacherApprove true or false) and change subjectTeacherCheck to true
-    @PostMapping("/tcheck")
-    public void teacherApprove(@RequestBody Student  student, @RequestParam(name = "check", required = true) boolean check, @RequestParam(name = "subjectCode", required = true) String subjectCode){
-        teacherRepository.teacherApprove(student, check, subjectCode);
+    @GetMapping("/tcheck")
+    public boolean teacherApprove(@RequestParam(name = "check", required = true) boolean check, @RequestParam(name = "subjectCode", required = true) String subjectCode, @RequestBody Student  student){
+        try {
+            teacherRepository.teacherApprove(student, check, subjectCode);
+            return  true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }
