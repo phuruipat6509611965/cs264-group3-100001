@@ -351,7 +351,13 @@
                         return response.json();
                     })
                     .then(data => {
-                        const studentAllData = data.map(studentInfomation => ({
+                        //console.log(data[0]);
+                        console.log(typeof data);
+                        studentData = data[0]
+                        //dataJson = JSON.stringify(data[0]);
+                        //console.log("Before map \n" + studentData);
+                        //console.log(data["date"]);
+                        const studentAllData = studentData.map(studentInfomation => ({
                             date: studentInfomation.date,
                             title: studentInfomation.title,
                             studentFirstName: studentInfomation.studentFirstName,
