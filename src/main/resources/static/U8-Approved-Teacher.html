@@ -346,6 +346,7 @@
                 fetch(`http://localhost:8080/api/teacher/tget?teacher=${teacherName}`)
                     .then(response => {
                         if (!response.ok) {
+                            addNoneDataLabel();
                             throw new Error("Failed to get student");
                         }
                         return response.json();
@@ -383,7 +384,7 @@
                         resolve(studentAllData);
                     })
                     .catch(error => {
-                        alert("Failed to get student: " + error.message);
+                        console.log("Failed to get student: " + error.message);
                         reject(error);
                     });
             });
@@ -740,7 +741,19 @@
 
             return tbody;
         }
-
+        function addNoneDataLabel() {
+            const formDiv = `
+                <div class="d-flex justify-content-center mt-5">
+                    <div class="d-flex gap-2">
+                        <h1>ไม่พบคำร้องในระบบ</h1>
+                    </div>
+                </div>
+                <br>
+            `;
+            const formContainer = document.getElementById("Form-container");
+            formContainer.innerHTML = formDiv; // Use innerHTML to set the content
+        }
+        
         createForm()
 
         // Test
