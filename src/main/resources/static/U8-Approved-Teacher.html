@@ -351,15 +351,12 @@
                         return response.json();
                     })
                     .then(data => {
-<<<<<<< HEAD
-=======
                         // Assuming the structure is List<Student>
                         if (!Array.isArray(data) || data.length === 0) {
                             throw new Error("Invalid data structure");
                         }
-                        
+
                         // Map the student information
->>>>>>> 2101c0ef7637c4d94f7637b9b17896449de379ea
                         const studentAllData = data.map(studentInfomation => ({
                             date: studentInfomation.date,
                             title: studentInfomation.title,
@@ -573,11 +570,11 @@
 
                             <!-- <div class="d-flex flex-row">
                                 <div class="d-flex justify-content-end ">
-                                    <button type="button" class="btn btn-success mr-5 ml-5 form${i}approved">APPROVED</button>
+                                    <button type="button" class="btn btn-success mr-5 ml-5 " id="form${i}approved">APPROVED</button>
                                 </div>
 
                                 <div class="d-flex justify-content-end ">
-                                    <button type="button" class="btn btn-danger form${i}denied">NOT APPROVED</button>
+                                    <button type="button" class="btn btn-danger " id="form${i}denied">NOT APPROVED</button>
                                 </div>
                             </div>
                             <br>
@@ -606,10 +603,11 @@
                     formDiv.querySelector(`#form${i}advisor`).value = studentAllData[i].advisor;
 
                     // Add event listeners for buttons
-                    const approvedBtn = formDiv.querySelector(`.form${i}approved`);
-                    const deniedBtn = formDiv.querySelector(`.form${i}denied`);
+                    const approvedBtn = formDiv.querySelector(`#form${i}approved`);
+                    const deniedBtn = formDiv.querySelector(`#form${i}denied`);
 
-                    approvedBtn.addEventListener("click", function () {
+                    if (approvedBtn) {
+                        approvedBtn.addEventListener("click", function () {
                         fetch(`http://localhost:8080/api/teacher/tcheck?check=${true}&subjectCode=${subjectCode}`, {
                             method: "POST",
                             headers: {
@@ -621,14 +619,25 @@
                                 if (!response.ok) {
                                     throw new Error("Login failed");
                                 }
-                                formDiv.removeChild(formDiv); // Remove form
-                                createForm();
                                 return response.json();
                             })
-                            .catch(error => { alert("Error"); });
+                            .then(data => {
+                                // Handle the response data if needed
+                                console.log(data);
+                            })
+                            .catch(error => {
+                                alert("Error");
+                            })
+                            .finally(() => {
+                                // Remove the form after the fetch request is completed
+                                formContainer.removeChild(formDiv);
+                                createForm();
+                            });
                     });
-
-                    deniedBtn.addEventListener("click", function () {
+                    }
+                    
+                    if(deniedBtn){
+                        deniedBtn.addEventListener("click", function () {
                         fetch(`http://localhost:8080/api/teacher/tcheck?check=${false}&subjectCode=${subjectCode}`, {
                             method: "POST",
                             headers: {
@@ -640,39 +649,33 @@
                                 if (!response.ok) {
                                     throw new Error("Login failed");
                                 }
-                                formDiv.removeChild(formDiv); // Remove form
-                                createForm()
                                 return response.json();
                             })
-                            .catch(error => { alert("Error"); });
-                    });
+                            .then(data => {
+                                // Handle the response data if needed
+                                console.log(data);
+                            })
+                            .catch(error => {
+                                alert("Error");
+                            })
+                            .finally(() => {
+                                // Remove the form after the fetch request is completed
+                                formContainer.removeChild(formDiv);
+                                createForm();
+                            });
+                    });   
+                    }
 
                     formContainer.appendChild(formDiv);
                 }
             });
         }
 
-
-
         // Function to create a table based on the subjectList
         function createTable(subjectList, formIndex, type) {
-            const table = document.createElement("table");
-            table.id = `form${formIndex}-${type}`;
-
-            // Create the table header
-            const thead = document.createElement("thead");
-            const headerRow = document.createElement("tr");
-            const headers = ["No.", "รหัสวิชา", "ชื่อวิชา", "Section", "วัน", "หน่วยกิต"];
-            headers.forEach(headerText => {
-                const th = document.createElement("th");
-                th.textContent = headerText;
-                headerRow.appendChild(th);
-            });
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-
             // Create the table body
             const tbody = document.createElement("tbody");
+            tbody.id = `form${formIndex}-${type}`;
             for (let j = 0; j < subjectList.length; j++) {
                 const rowData = subjectList[j];
                 subjectCode = rowData.subjectCode;
@@ -688,9 +691,8 @@
 
                 tbody.appendChild(tr);
             }
-            table.appendChild(tbody);
 
-            return table;
+            return tbody;
         }
 
         createForm()
