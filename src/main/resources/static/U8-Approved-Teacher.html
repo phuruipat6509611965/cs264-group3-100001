@@ -351,12 +351,19 @@
                         return response.json();
                     })
                     .then(data => {
-                        //console.log(data[0]);
-                        console.log(typeof data);
-                        studentData = data[0]
-                        //dataJson = JSON.stringify(data[0]);
-                        //console.log("Before map \n" + studentData);
-                        //console.log(data["date"]);
+                        // Assuming the structure is List<List<Student>>
+                        if (!Array.isArray(data) || data.length === 0) {
+                            throw new Error("Invalid data structure");
+                        }
+        
+                        // Extract the first list (assuming it contains the students)
+                        const studentData = data[0];
+        
+                        if (!Array.isArray(studentData)) {
+                            throw new Error("Invalid data structure");
+                        }
+        
+                        // Map the student information
                         const studentAllData = studentData.map(studentInfomation => ({
                             date: studentInfomation.date,
                             title: studentInfomation.title,
@@ -379,6 +386,7 @@
                             addSubjectList: studentInfomation.addSubjectList,
                             dropSubjectList: studentInfomation.dropSubjectList
                         }));
+        
                         console.log(studentAllData);
                         resolve(studentAllData);
                     })
@@ -387,7 +395,7 @@
                         reject(error);
                     });
             });
-        }
+        }        
 
         function createForm() {
             // Assuming you have a Form-container element in your HTML
