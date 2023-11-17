@@ -339,60 +339,6 @@
         ///-- Get data ---///
         document.getElementById("cause").value = sessionStorage.getItem('cause');
 
-        function generateSubjectForm(tableBodyId) {
-            var numberOfSubjects = document.getElementById(`numberOfSubjectsToAdd`).value;
-            if(numberOfSubjects >= 10){
-                numberOfSubjects = 10;
-            }
-            const tableBody = document.getElementById(tableBodyId);
-
-            tableBody.innerHTML = '';
-
-            for (let i = 1; i <= numberOfSubjects; i++) {
-                const subjectRow = document.createElement('tr');
-                subjectRow.innerHTML = `
-                <td>${i}</td>
-              <td><input type="text" name="subjectCodeToDelete${i}" id="subjectCodeToDelete${i}"  style="width: 100px;"required></td>
-              <td><input type="text" name="subjectNameToDelete${i}" id="subjectNameToDelete${i}"  style="width: 200px;"required></td>
-              <td><input type="text" name="sectionToDelete${i}" id="sectionToDelete${i}"  style="width: 100px;"required></td>
-              <td><input type="text" name="dateToDelete${i}" id="dateToDelete${i}"  style="width: 200px;"required></td>
-              <td><input type="text" name="gitToDelete${i}" id="gitToDelete${i}"  style="width: 100px;"required></td>
-              <td><input type="text" name="subjectTeacherToDelete${i}" id="subjectTeacherToDelete${i}" style="width: 200px;"required></td>
-            `;
-
-                tableBody.appendChild(subjectRow);
-            }
-
-            console.log(numberOfSubjects);
-        }
-
-        function generateDeleteSubjectForm() {
-            var numberOfSubjects = document.getElementById('numberOfSubjectsToDelete').value;
-            if(numberOfSubjects >= 10){
-                numberOfSubjects = 10;
-            }
-            const tableBody = document.getElementById('deleteSubjectTableBody');
-
-            tableBody.innerHTML = '';
-
-            for (let i = 1; i <= numberOfSubjects; i++) {
-                const subjectRow = document.createElement('tr');
-                subjectRow.innerHTML = `
-              <td>${i}</td>
-              <td><input type="text" name="subjectCodeToDelete${i}" id="subjectCodeToDelete${i}"  style="width: 100px;"required></td>
-              <td><input type="text" name="subjectNameToDelete${i}" id="subjectNameToDelete${i}"  style="width: 200px;"required></td>
-              <td><input type="text" name="sectionToDelete${i}" id="sectionToDelete${i}"  style="width: 100px;"required></td>
-              <td><input type="text" name="dateToDelete${i}" id="dateToDelete${i}"  style="width: 200px;"required></td>
-              <td><input type="text" name="gitToDelete${i}" id="gitToDelete${i}"  style="width: 100px;"required></td>
-              <td><input type="text" name="subjectTeacherToDelete${i}" id="subjectTeacherToDelete${i}" style="width: 200px;"required></td>
-          `;
-
-                tableBody.appendChild(subjectRow);
-            }
-
-            console.log(numberOfSubjects);
-        }
-
         function collectData(){
 
             var gstudentFirstname = sessionStorage.getItem('studentFirstname');
