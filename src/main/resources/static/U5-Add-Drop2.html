@@ -176,8 +176,6 @@
                 <label for="numberOfSubjectsToAdd">จำนวนวิชาที่ต้องการเพิ่ม (0-10):</label>
                 <input class="btn btn-outline-secondary btn-sm" type="number" id="numberOfSubjectsToAdd"
                     name="numberOfSubjectsToAdd" min="0" max="10" required>
-                <button class="btn btn-outline-dark btn-sm" type="button"
-                    onclick="generateSubjectForm('addSubjectTableBody')">สร้างตาราง</button>
                 <div class="d-flex justify-content-center">
                     <form id="addSubjectForm">
                         <table id="addSubjectTable">
@@ -202,8 +200,6 @@
                     <label for="numberOfSubjectsToDelete">จำนวนวิชาที่ต้องการถอน (0-10):</label>
                     <input class="btn btn-outline-secondary btn-sm" type="number" id="numberOfSubjectsToDelete"
                         name="numberOfSubjectsToDelete" min="0" max="10" required>
-                    <button class="btn btn-outline-dark btn-sm" type="button"
-                        onclick="generateDeleteSubjectForm()">สร้างตาราง</button>
                     <div class="d-flex justify-content-center">
                         <table id="deleteSubjectTable">
                             <thead>
@@ -245,6 +241,102 @@
     
     <script>
 
+        function updateAddSubjectForm(tableBodyId, numberOfSubjects) {
+
+            //check if number of subject is between 0-10
+            numberOfSubjects = Math.min(numberOfSubjects, 10);
+    
+            const tableBody = document.getElementById(tableBodyId);
+    
+            const existingRows = tableBody.querySelectorAll('tr');
+            const existingRowCount = existingRows.length;
+    
+            if (numberOfSubjects > existingRowCount) {
+                // Add new rows
+                for (let i = existingRowCount + 1; i <= numberOfSubjects; i++) {
+                    const subjectRow = document.createElement('tr');
+                    subjectRow.innerHTML = `
+                        <td>${i}</td>
+                        <td><input type="text" name="subjectCodeToAdd${i}" style="width: 100px;" required></td>
+                        <td><input type="text" name="subjectNameToAdd${i}" style="width: 200px;" required></td>
+                        <td><input type="text" name="sectionToAdd${i}" style="width: 100px;" required></td>
+                        <td><input type="text" name="dateToAdd${i}" style="width: 200px;" required></td>
+                        <td><input type="text" name="gitToAdd${i}" style="width: 100px;" required></td>
+                        <td><input type="text" name="techToAdd${i}" style="width: 200px;" required></td>
+                `;
+                tableBody.appendChild(subjectRow);
+                }
+            } else if (numberOfSubjects < existingRowCount) {
+                // Remove excess rows
+                for (let i = existingRowCount; i > numberOfSubjects; i--) {
+                    tableBody.removeChild(existingRows[i - 1]);
+                }
+              }
+    
+            currentNumberOfSubjects = numberOfSubjects;
+        }
+    
+        document.getElementById('numberOfSubjectsToAdd').addEventListener('input', function () {
+            const numberOfSubjects = parseInt(this.value) || 0;
+            updateAddSubjectForm('addSubjectTableBody', numberOfSubjects);
+        });
+    
+        document.getElementById('addSubjectForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const addSubjectsFormData = new FormData(this);
+            console.log("Add Subjects Form Data:", addSubjectsFormData);
+        });
+    
+    
+    
+    
+    
+        ////--- DELETE SUBJECT PART ---////
+        function updateDeleteSubjectForm(numberOfSubjects) {
+            // Limit the number of subjects to a maximum of 10
+            numberOfSubjects = Math.min(numberOfSubjects, 10);
+    
+            const tableBody = document.getElementById('deleteSubjectTableBody');
+    
+            const existingRows = tableBody.querySelectorAll('tr');
+            const existingRowCount = existingRows.length;
+    
+            if (numberOfSubjects > existingRowCount) {
+                // Add new rows
+                for (let i = existingRowCount + 1; i <= numberOfSubjects; i++) {
+                    const subjectRow = document.createElement('tr');
+                    subjectRow.innerHTML = `
+                        <td>${i}</td>
+                        <td><input type="text" name="subjectCodeToDelete${i}" style="width: 100px;" required></td>
+                        <td><input type="text" name="subjectNameToDelete${i}" style="width: 200px;" required></td>
+                        <td><input type="text" name="sectionToDelete${i}" style="width: 100px;" required></td>
+                        <td><input type="text" name="dateToDelete${i}" style="width: 200px;" required></td>
+                        <td><input type="text" name="gitToDelete${i}" style="width: 100px;" required></td>
+                        <td><input type="text" name="techToDelete${i}" style="width: 200px;" required></td>
+                    `;
+                    tableBody.appendChild(subjectRow);
+                }
+            } else if (numberOfSubjects < existingRowCount) {
+                // Remove excess rows
+                for (let i = existingRowCount; i > numberOfSubjects; i--) {
+                    tableBody.removeChild(existingRows[i - 1]);
+                }
+            }
+        }
+    
+        document.getElementById('numberOfSubjectsToDelete').addEventListener('input', function () {
+            // Ensure the entered number does not exceed the maximum limit (10)
+            const numberOfSubjects = Math.min(parseInt(this.value) || 0, 10);
+            updateDeleteSubjectForm(numberOfSubjects);
+        });
+    
+        document.getElementById('deleteSubjectForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const deleteSubjectsFormData = new FormData(this);
+            console.log("Delete Subjects Form Data:", deleteSubjectsFormData);
+        });
+    
+        ///-- Get data ---///
         document.getElementById("cause").value = sessionStorage.getItem('cause');
 
         function generateSubjectForm(tableBodyId) {
@@ -260,12 +352,12 @@
                 const subjectRow = document.createElement('tr');
                 subjectRow.innerHTML = `
                 <td>${i}</td>
-                <td><input type="text" name="subjectCodeToAdd${i}"  id="subjectCodeToAdd${i}"  required></td>
-                <td><input type="text" name="subjectNameToAdd${i}" id="subjectNameToAdd${i}" required></td>
-                <td><input type="text" name="sectionToAdd${i}" id="sectionToAdd${i}" required></td>
-                <td><input type="text" name="dateToAdd${i}" id="dateToAdd${i}" required></td>
-                <td><input type="text" name="gitToAdd${i}" id="gitToAdd${i}" required></td>
-                <td><input type="text" name="subjectTeacherToAdd${i}" id="subjectTeacherToAdd${i}" required></td>
+              <td><input type="text" name="subjectCodeToDelete${i}" id="subjectCodeToDelete${i}"  style="width: 100px;"required></td>
+              <td><input type="text" name="subjectNameToDelete${i}" id="subjectNameToDelete${i}"  style="width: 200px;"required></td>
+              <td><input type="text" name="sectionToDelete${i}" id="sectionToDelete${i}"  style="width: 100px;"required></td>
+              <td><input type="text" name="dateToDelete${i}" id="dateToDelete${i}"  style="width: 200px;"required></td>
+              <td><input type="text" name="gitToDelete${i}" id="gitToDelete${i}"  style="width: 100px;"required></td>
+              <td><input type="text" name="subjectTeacherToDelete${i}" id="subjectTeacherToDelete${i}" style="width: 200px;"required></td>
             `;
 
                 tableBody.appendChild(subjectRow);
@@ -287,12 +379,12 @@
                 const subjectRow = document.createElement('tr');
                 subjectRow.innerHTML = `
               <td>${i}</td>
-              <td><input type="text" name="subjectCodeToDelete${i}" id="subjectCodeToDelete${i}"  required></td>
-              <td><input type="text" name="subjectNameToDelete${i}" id="subjectNameToDelete${i}"  required></td>
-              <td><input type="text" name="sectionToDelete${i}" id="sectionToDelete${i}"  required></td>
-              <td><input type="text" name="dateToDelete${i}" id="dateToDelete${i}"  required></td>
-              <td><input type="text" name="gitToDelete${i}" id="gitToDelete${i}"  required></td>
-              <td><input type="text" name="subjectTeacherToDelete${i}" id="subjectTeacherToDelete${i}" required></td>
+              <td><input type="text" name="subjectCodeToDelete${i}" id="subjectCodeToDelete${i}"  style="width: 100px;"required></td>
+              <td><input type="text" name="subjectNameToDelete${i}" id="subjectNameToDelete${i}"  style="width: 200px;"required></td>
+              <td><input type="text" name="sectionToDelete${i}" id="sectionToDelete${i}"  style="width: 100px;"required></td>
+              <td><input type="text" name="dateToDelete${i}" id="dateToDelete${i}"  style="width: 200px;"required></td>
+              <td><input type="text" name="gitToDelete${i}" id="gitToDelete${i}"  style="width: 100px;"required></td>
+              <td><input type="text" name="subjectTeacherToDelete${i}" id="subjectTeacherToDelete${i}" style="width: 200px;"required></td>
           `;
 
                 tableBody.appendChild(subjectRow);
